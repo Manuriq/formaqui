@@ -1,0 +1,27 @@
+
+
+$primary: #08080A;
+$btn-padding-y-lg: 25px;
+$input-padding-y-lg: 35px;
+
+@import "~bootstrap/scss/bootstrap";
+
+@font-face {
+    font-family: 'montserrat';
+    src: url(/assets/fonts/montserrat.ttf) format('opentype');
+}
+
+body {
+    font-family: 'montserrat', sans-serif;
+}
+
+.btn-primary a{
+    font-size: 16px;
+}
+
+.page-title{
+    margin-top: 80px;
+    font-size: 52px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}

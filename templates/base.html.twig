@@ -14,7 +14,49 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="./images/logo.svg" width="200px" height="50px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav mr-2 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mon C.V</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Paramètres</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container-fluid !direction !spacing">
+            <div class="row justify-content-center">
+                <div class="col-sm-11">
+                    <h1 class="page-title">Salut Nanas,<br>
+                    Trouvez votre emploi de rêve</h1>
+                    <div class="col-sm-12 row justify-content-between mb-4">
+                        <div class="col-sm-10">
+                            <form action="">
+                                <input type="text" class="form-control form-control-lg" placeholder="Recherche">
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <img class="mx-auto d-block" height="100px" src="./images/filter.svg">
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary btn-lg mt-4" href="#" role="button">Envoyer</a>
+                    </div>
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </body>
 </html>
