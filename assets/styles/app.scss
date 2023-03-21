@@ -1,8 +1,6 @@
 
 
 $primary: #08080A;
-$btn-padding-y-lg: 25px;
-$input-padding-y-lg: 35px;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -14,7 +12,7 @@ $input-padding-y-lg: 35px;
 body {
     font-family: 'montserrat', sans-serif;
     background-color: #F9F9FA;
-    font-size: 21px;
+    font-size: 12px;
 }
 
 .btn-primary a{
@@ -22,53 +20,43 @@ body {
 }
 
 .page-h1{
-    margin-top: 80px;
-    font-size: 52px;
+    font-size: 28px;
     font-weight: bold;
-    margin-bottom: 50px;
 }
 
 .input-formaqui{
     border-color: #E6EAEE;
 }
 
-.page-h3{
-    font-size: 38px;
-    font-weight: bold;
+.job-title{
+    font-size: 16px;
 }
 
 .page-h3{
-    font-size: 32px;
+    font-size: 18px;
     font-weight: bold;
+    margin-bottom: 0;
 }
 
 a{
     font-family: 'montserrat', sans-serif;
     color: #F3B357;
     font-weight: 700;
-    font-size: 28px;
     text-decoration: none;
 }
 
-.price-aquiform{
-    font-weight: bold;
-    font-size: 28px;
-}
 
 .card-formaqui{
-    padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 10px;
     background: #FFFFFF;
     box-shadow: 0px 29px 23px rgba(20, 18, 103, 0.03), 0px 13px 36px rgba(23, 58, 110, 0.01);
-    border-radius: 16px;
+    border-radius: 10px;
 }
 
-.desc-business{
+.job-desc{
     font-style: normal;
     font-weight: 500;
-    font-size: 25px;
-    line-height: 18px;
+    font-size: 14px;
     color: #828282
 }
 

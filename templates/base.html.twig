@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
@@ -14,7 +14,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img src="./images/logo.svg" width="200px" height="50px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,102 +36,107 @@
         </div>
     </nav>
     <body>
-        <div class="container-fluid !direction !spacing">
+        <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-sm-11">
-                    <h1 class="page-h1">Salut Nanas,<br>
+                <div class="col-12">
+                    <h1 class="page-h1 mt-4 mb-4">Salut Nanas,<br>
                     Trouvez votre emploi de rêve</h1>
-                    <div class="col-sm-12 row justify-content-between mb-4">
-                        <div class="col-sm-10">
+                    <div class="row justify-content-around mb-4 align-items-center">
+                        <div class="col-9">
                             <form action="">
                                 <input type="text" class="form-control form-control-lg input-formaqui" placeholder="Recherche">
                             </form>
                         </div>
-                        <div class="col-sm-2">
-                            <img class="mx-auto d-block" height="100px" src="./images/filter.svg">
+                        <div class="col-auto">
+                            <img class="mx-auto d-block" height="54px" src="./images/filter.svg">
                         </div>
                     </div>
-                    <div class="row justify-content-between align-middle" style="margin-bottom: 60px; margin-top: 60px">
-                        <h3 class="page-h3 col-sm-9">Emplois récents</h3>
-                        <a href="" class="col-sm-3 text-end">Voir tout</a>
+                    <div class="row justify-content-between align-items-center">
+                        <h3 class="page-h3 col-auto">Emplois récents</h3>
+                        <a href="" class="col-auto text-end">Voir tout</a>
                     </div>
-                    <div class="col-sm-11 card-formaqui mt-4 mb-4 justify-content-center">
-                        <div class="row justify-content-between align-middle">
-                            <div class="col-sm-2">
-                                <img src="./images/entreprise.png" class="img-thumbnail" widht="100" height="100">
+                    <div class="row justify-content-around">
+                        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="fw-bold">Crèche</span>
+                                </div>
                             </div>
-                            <div class="col-sm-5">
-                                <p class="price-aquiform text-end">Crèche</p>
+                            <h4 class="job-title mt-4 fw-bold">Senior UX Designer</h4>
+                            <span class="job-desc">Facebook - San Diego, CA</span>
+                            <div class="col-12 mt-2">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item badge badge-aquiform">CDI</li>
+                                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
+                                    <li class="list-inline-item badge badge-aquiform">35H</li>
+                                </ul>
                             </div>
                         </div>
-                        <h4 class="page-h3 mt-4 mb-4">Senior UX Designer</h4>
-                        <p class="desc-business mb-4 mt-4">Facebook - San Diego, CA</p>
-                        <div class="col-sm-12">
-                            <ul class="list-inline">
-                                <li class="list-inline-item badge badge-aquiform">CDI</li>
-                                <li class="list-inline-item badge badge-aquiform">Bruge</li>
-                                <li class="list-inline-item badge badge-aquiform">35H</li>
-                            </ul>
+                        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="fw-bold">Crèche</span>
+                                </div>
+                            </div>
+                            <h4 class="job-title mt-4 fw-bold">Senior UX Designer</h4>
+                            <span class="job-desc">Facebook - San Diego, CA</span>
+                            <div class="col-12 mt-2">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item badge badge-aquiform">CDI</li>
+                                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
+                                    <li class="list-inline-item badge badge-aquiform">35H</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="fw-bold">Crèche</span>
+                                </div>
+                            </div>
+                            <h4 class="job-title mt-4 fw-bold">Senior UX Designer</h4>
+                            <span class="job-desc">Facebook - San Diego, CA</span>
+                            <div class="col-12 mt-2">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item badge badge-aquiform">CDI</li>
+                                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
+                                    <li class="list-inline-item badge badge-aquiform">35H</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="row justify-content-between align-middle" style="margin-bottom: 60px; margin-top: 60px">
-                        <h3 class="page-h3 col-sm-9">Les offres populaires</h3>
-                        <a href="" class="col-sm-3 text-end">Voir tout</a>
+                    <div class="row justify-content-between align-middle">
+                        <h3 class="page-h3 col-9">Les offres populaires</h3>
+                        <a href="" class="col-3 text-end">Voir tout</a>
                     </div>
-                    <div class="col-sm-11 card-formaqui mt-4 mb-4 justify-content-center">
-                        <div class="row justify-content-between align-middle">
-                            <div class="col-sm-2">
-                                <img src="./images/entreprise.png" class="img-thumbnail" widht="100" height="100">
+                    <div class="row justify-content-around">
+                        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="fw-bold">Crèche</span>
+                                </div>
                             </div>
-                            <div class="col-sm-5">
-                                <p class="price-aquiform text-end">Petite enfance</p>
+                            <h4 class="job-title mt-4 fw-bold">Senior UX Designer</h4>
+                            <span class="job-desc">Facebook - San Diego, CA</span>
+                            <div class="col-12 mt-2">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item badge badge-aquiform">CDI</li>
+                                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
+                                    <li class="list-inline-item badge badge-aquiform">35H</li>
+                                </ul>
                             </div>
-                        </div>
-                        <h4 class="page-h3 mt-4 mb-4">Senior UX Designer</h4>
-                        <p class="desc-business mb-4 mt-4">Facebook - San Diego, CA</p>
-                        <div class="col-sm-12">
-                            <ul class="list-inline">
-                                <li class="list-inline-item badge badge-aquiform">CDI</li>
-                                <li class="list-inline-item badge badge-aquiform">Bruge</li>
-                                <li class="list-inline-item badge badge-aquiform">35H</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-11 card-formaqui mt-4 mb-4 justify-content-center">
-                        <div class="row justify-content-between align-middle">
-                            <div class="col-sm-2">
-                                <img src="./images/entreprise.png" class="img-thumbnail" widht="100" height="100">
-                            </div>
-                            <div class="col-sm-5">
-                                <p class="price-aquiform text-end">20K€ - 25k€</p>
-                            </div>
-                        </div>
-                        <h4 class="page-h3 mt-4 mb-4">Senior UX Designer</h4>
-                        <p class="desc-business mb-4 mt-4">Facebook - San Diego, CA</p>
-                        <div class="col-sm-12">
-                            <ul class="list-inline">
-                                <li class="list-inline-item badge badge-aquiform">CDI</li>
-                                <li class="list-inline-item badge badge-aquiform">Bruge</li>
-                                <li class="list-inline-item badge badge-aquiform">35H</li>
-                            </ul>
-                        </div>
-                    </div><div class="col-sm-11 card-formaqui mt-4 mb-4 justify-content-center">
-                        <div class="row justify-content-between align-middle">
-                            <div class="col-sm-2">
-                                <img src="./images/entreprise.png" class="img-thumbnail" widht="100" height="100">
-                            </div>
-                            <div class="col-sm-5">
-                                <p class="price-aquiform text-end">20K€ - 25k€</p>
-                            </div>
-                        </div>
-                        <h4 class="page-h3 mt-4 mb-4">Senior UX Designer</h4>
-                        <p class="desc-business mb-4 mt-4">Facebook - San Diego, CA</p>
-                        <div class="col-sm-12">
-                            <ul class="list-inline">
-                                <li class="list-inline-item badge badge-aquiform">CDI</li>
-                                <li class="list-inline-item badge badge-aquiform">Bruge</li>
-                                <li class="list-inline-item badge badge-aquiform">35H</li>
-                            </ul>
                         </div>
                     </div>
                     <div class="d-grid gap-2 mb-4">
