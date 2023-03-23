@@ -28,9 +28,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?bool $isStudent = null;
-
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
@@ -117,18 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function isIsStudent(): ?bool
-    {
-        return $this->isStudent;
-    }
-
-    public function setIsStudent(bool $isStudent): self
-    {
-        $this->isStudent = $isStudent;
-
-        return $this;
     }
 
     public function getAddress(): ?string
