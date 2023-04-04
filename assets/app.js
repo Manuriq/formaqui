@@ -22,3 +22,19 @@ require('bootstrap');
 /*$(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });*/
+
+/*const searchInput = document.getElementById('registration_form_address');
+const autocompleteUrl = "https://api-adresse.data.gouv.fr/search/"
+
+searchInput.addEventListener('input', function() {
+    fetch(autocompleteUrl + '?q=' + encodeURIComponent(searchInput.value), {
+        mode: 'no-cors'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            const suggestions = data.map(item => ({value: item.value, text: item.text}));
+
+            searchInput.autocomplete.update(suggestions);
+        });
+});*/

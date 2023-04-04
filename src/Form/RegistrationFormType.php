@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
@@ -72,6 +73,21 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => "Date de naissance",
+            ])
+            ->add('address', ChoiceType::class, [
+                //'name' => "address",
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre adresse',
+                    ]),
+                ],
+                'label' => "Adresse",
+                /*'attr' => [
+                    'autocomplete' => 'off',
+                    'data-autocomplete-url' => 'https://api-adresse.data.gouv.fr/search/'
+                ]*/
+                'autocomplete' => true,
+                'autocomplete_url' => "autocomplete/",
             ])
         ;
     }

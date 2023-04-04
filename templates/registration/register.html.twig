@@ -17,10 +17,14 @@
         {{ form_row(registrationForm.firstName) }}
         {{ form_row(registrationForm.lastName) }}
         {{ form_row(registrationForm.age) }}
+        {{ form_row(registrationForm.address) }}
         {{ form_row(registrationForm.agreeTerms) }}
         <span>J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
         <div class="d-grid gap-2 mb-4">
             <button type="submit" class="btn btn-primary btn-lg mt-4">Inscription</button>
         </div>
+        <br><br>
     {{ form_end(registrationForm) }}
 {% endblock %}
+
+
