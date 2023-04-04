@@ -75,17 +75,12 @@ class RegistrationFormType extends AbstractType
                 'label' => "Date de naissance",
             ])
             ->add('address', ChoiceType::class, [
-                //'name' => "address",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez votre adresse',
                     ]),
                 ],
                 'label' => "Adresse",
-                /*'attr' => [
-                    'autocomplete' => 'off',
-                    'data-autocomplete-url' => 'https://api-adresse.data.gouv.fr/search/'
-                ]*/
                 'autocomplete' => true,
                 'autocomplete_url' => "autocomplete/",
             ])
