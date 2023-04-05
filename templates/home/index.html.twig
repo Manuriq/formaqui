@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue!{% endblock %}
+
+{% block body %}
+<div class="row justify-content-around mb-4 align-items-center mt-4">
+    <img class="mx-auto d-block mb-4" height="186px" width="186px" src="./images/icon.svg">
+    <h1 class="page-h1 mt-4 text-center">Une application crée par Form’Aqui 🔨</h1>
+    <span class="job-desc mt-4 text-center">L’appli qui met en relation les employeurs, les professionnels de la Petite Enfance et les candidats à l’alternance</span>
+    <div class="d-grid gap-2 mt-4 mb-4">
+        <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg mt-4">Connexion</a>
+    </div>
+    <span class="text-center">Vous n'avez pas de compte ? <a href="{{ path('app_prereg') }}">S'inscrire</a></span>
+    
+</div>
+{% endblock %}

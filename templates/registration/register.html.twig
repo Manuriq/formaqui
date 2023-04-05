@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription - Étudiant{% endblock %}
+{% block title %}Inscription - Candidat{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Inscription - Étudiant</h1>
+    <h1>Inscription - Candidat</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -24,7 +24,6 @@
         <div class="d-grid gap-2 mb-4">
             <button type="submit" class="btn btn-primary btn-lg mt-4">Inscription</button>
         </div>
-        <br><br>
     {{ form_end(registrationForm) }}
 {% endblock %}
 
