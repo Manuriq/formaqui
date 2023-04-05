@@ -27,9 +27,22 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+    #[Route('/prereg', name: 'app_prereg')]
+    public function autocomplete(Request $request)
+    {
+        // on check si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('registration/prereg.html.twig');
+    }
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -57,7 +70,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
+            $this->addFlash("success", "Félicitation pour votre inscription! N'oubliez pas de valider votre email !");
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,

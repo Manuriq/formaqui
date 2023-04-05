@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <title>FormaKids - {% block title %}Bienvenue!{% endblock %}</title>
+        <link rel="icon" href="./images/icon.svg">
         <script src="https://cdn.jsdelivr.net/npm/slim-select/dist/slimselect.min.js"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -23,14 +23,23 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav mr-2 mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
                     </li>
+                    {% if app.user %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Mon C.V</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Paramètres</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -43,5 +52,21 @@
                 </div>
             </div>
         </div>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header text-white bg-{{ label }}">
+                            <strong class="me-auto">Notification</strong>
+                            <small>Maintenant</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
     </body>
 </html>

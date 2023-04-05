@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TailwindController extends AbstractController
 {
-    #[Route('/tailwind', name: 'app_tailwind')]
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
         return $this->render('tailwind/index.html.twig', [

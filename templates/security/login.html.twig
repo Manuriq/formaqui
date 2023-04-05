@@ -10,7 +10,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            Vous êtes connecté en tantt que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% endif %}
 
@@ -34,7 +34,9 @@
             <input type="checkbox" name="_remember_me"> Se souvenir de moi !
         </label>
     </div>
-    <span>Je n'ai pas de compte ! <a href="{{ path('app_register') }}">Créer un compte</a></span>
+    
+    <span>Je n'ai pas de compte ! <a href="{{ path('app_prereg') }}">Créer un compte</a></span><br>
+    <span><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a> ?</span>
     <div class="d-grid gap-2 mb-4">
         <button class="btn btn-primary btn-lg mt-4" type="submit">
             Connexion

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <h1>Je m'inscris !</h1>
+
+    <div class="d-grid gap-2">
+        <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg mt-4">Je suis un étudiant</a>
+    </div>
+    <div class="d-grid gap-2 mb-4">
+        <a href="" class="btn btn-primary btn-lg mt-4">Je suis un employeur</a>
+    </div>
+    <span class="text-center">J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
+{% endblock %}
+
+

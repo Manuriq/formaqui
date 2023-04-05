@@ -3,7 +3,11 @@
 {% block title %}Hello TailwindController!{% endblock %}
 
 {% block body %}
-<h1 class="page-h1 mt-4 mb-4">Salut Nanas,<br>
+{% if app.user %}
+<h1 class="page-h1 mt-4 mb-4">Salut {{ app.user.firstName }},<br>
+{% else %}
+<h1 class="page-h1 mt-4 mb-4">Bienvenue,<br>
+{% endif %}
 Trouvez votre emploi de rêve</h1>
 <div class="row justify-content-around mb-4 align-items-center">
     <div class="col-9">
@@ -102,8 +106,5 @@ Trouvez votre emploi de rêve</h1>
             </ul>
         </div>
     </div>
-</div>
-<div class="d-grid gap-2 mb-4">
-    <a class="btn btn-primary btn-lg mt-4" href="#" role="button">Envoyer</a>
 </div>
 {% endblock %}
