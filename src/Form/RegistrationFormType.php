@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
@@ -65,7 +66,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => "Nom",
             ])
-            ->add('age', DateType::class, [
+            ->add('age', BirthdayType::class, [
                 'mapped' => true,
                 'constraints' => [
                     new NotBlank([
@@ -74,7 +75,8 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => "Date de naissance",
             ])
-            ->add('address', ChoiceType::class, [
+            ->add('address', TextType::class, [
+                'mapped' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez votre adresse',
@@ -83,6 +85,19 @@ class RegistrationFormType extends AbstractType
                 'label' => "Adresse",
                 'autocomplete' => true,
                 'autocomplete_url' => "autocomplete/",
+                'tom_select_options' => [
+                    'maxItems' => 1,
+                    'placeholder' => "Rechercher une adresse"
+                ]
+            ])
+            ->add('phone', TextType::class, [
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre numéro de téléphone',
+                    ]),
+                ],
+                'label' => "Numéro de téléphone",
             ])
         ;
     }

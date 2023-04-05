@@ -33,9 +33,11 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setStudent(true);
+            $user->setCreatedAt(new \DateTimeImmutable('now'));
+            $user->setUpdatedAt(new \DateTimeImmutable('now'));
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -51,7 +53,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('mailer@your-domain.com', 'FormaKids'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Merci de confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email

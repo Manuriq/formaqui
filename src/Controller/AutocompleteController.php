@@ -25,7 +25,7 @@ class AutocompleteController extends AbstractController
 
         $results = json_decode($response->getContent());
         foreach ($results->features as $result => $city) {
-            $data["results"][] = ["value" => $city->properties->id, "text" => $city->properties->label];
+            $data["results"][] = ["value" => $city->properties->label, "text" => $city->properties->label];
         }
 
         return new JsonResponse($data);
