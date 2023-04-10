@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TailwindController extends AbstractController
+class SearchJobController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/searchjob', name: 'searchjob')]
     public function index(): Response
     {
-        return $this->render('tailwind/index.html.twig', [
-            'controller_name' => 'TailwindController',
+        return $this->render('search_job/index.html.twig', [
+            'controller_name' => 'SearchJobController',
         ]);
     }
 }
