@@ -1,0 +1,71 @@
+                {# <td>{{ job.id }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.description }}</td>
+                <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ job.state ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a>
+                    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
+                </td> #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Job index{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+    <h1 class="page-h1 mt-4 mb-4">Salut {{ app.user.firstName }},<br>
+    {% else %}
+    <h1 class="page-h1 mt-4 mb-4">Bienvenue,<br>
+    {% endif %}
+    Trouvez votre emploi de rêve</h1>
+    <div class="row justify-content-around mb-4 align-items-center">
+        <div class="col-9">
+            <form action="">
+                <input type="text" class="form-control form-control-lg input-formaqui" placeholder="Recherche">
+            </form>
+        </div>
+        <div class="col-auto">
+            <img class="mx-auto d-block" height="54px" src="./images/filter.svg">
+        </div>
+    </div>
+    <div class="row justify-content-between align-items-center">
+        <h3 class="page-h3 col-auto mb-4">Emplois récents</h3>
+        <a href="" class="col-auto text-end">Voir tout</a>
+    </div>
+    <div class="row justify-content-around">
+        {% if is_granted('ROLE_BOSS') %}
+        <div class="col-11 mb-2">
+            <a href="{{ path('app_job_new') }}" class="btn btn-primary">Ajouter une annonce</a>
+        </div>
+        {% endif %}
+        {% for job in jobs %}
+        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+                </div>
+                <div class="col-auto">
+                    <span class="fw-bold">Crèche</span>
+                </div>
+            </div>
+            <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
+            <span class="job-desc">{{ job.business.title }}</span>
+            <div class="col-12 mt-2">
+                <ul class="list-inline">
+                    <li class="list-inline-item badge badge-aquiform">CDI</li>
+                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
+                    <li class="list-inline-item badge badge-aquiform">35H</li>
+                </ul>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-11">
+            <div class="alert alert-warning text-center" role="alert">
+                Aucun résultat trouvé
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

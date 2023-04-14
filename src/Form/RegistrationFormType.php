@@ -90,7 +90,7 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => "Rechercher une adresse"
                 ]
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'mapped' => true,
                 'constraints' => [
                     new NotBlank([

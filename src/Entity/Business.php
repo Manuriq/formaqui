@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BusinessRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,6 +46,14 @@ class Business
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $activities = [];
+
+    #[ORM\OneToMany(mappedBy: 'Business', targetEntity: Job::class, orphanRemoval: true)]
+    private Collection $jobs;
+
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,6 +176,36 @@ class Business
     public function setActivities(array $activities): self
     {
         $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs->add($job);
+            $job->setBusiness($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getBusiness() === $this) {
+                $job->setBusiness(null);
+            }
+        }
 
         return $this;
     }
