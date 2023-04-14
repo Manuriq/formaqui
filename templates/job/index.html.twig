@@ -1,13 +1,3 @@
-                {# <td>{{ job.id }}</td>
-                <td>{{ job.title }}</td>
-                <td>{{ job.description }}</td>
-                <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ job.state ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
-                </td> #}
 
 {% extends 'base.html.twig' %}
 
@@ -51,7 +41,7 @@
                 </div>
             </div>
             <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-            <span class="job-desc">{{ job.business.title }}</span>
+            <span class="job-desc">{{ job.business.name }}</span>
             <div class="col-12 mt-2">
                 <ul class="list-inline">
                     <li class="list-inline-item badge badge-aquiform">CDI</li>

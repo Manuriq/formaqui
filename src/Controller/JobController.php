@@ -31,11 +31,13 @@ class JobController extends AbstractController
             return $this->redirect($referer);
 
         }
+
         $job = new Job();
-        $form = $this->createForm(JobType::class, $job);
+        $form = $this->createForm(JobType::class, $job, array('user' => $this->getUser()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $job->setBusiness($this->getUser()->getBusinesses()->first());
             $jobRepository->save($job, true);
 
             return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
