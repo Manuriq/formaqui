@@ -14,6 +14,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -40,7 +41,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager, HttpClientInterface $httpClient): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -49,7 +50,21 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+
+            // On refait un appel à l'API pour récupérer les coordonnées GPS de l'adresse
+            $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
+                'query' => [
+                    'q' => $form->get('address')->getData(),
+                ],
+            ]);
+            $results = json_decode($response->getContent());
+
+            $user->setLatitude($results->features[0]->geometry->coordinates[0]);
+            $user->setLongitude($results->features[0]->geometry->coordinates[1]);
+            $user->setCity($results->features[0]->properties->city);
+            $user->setPostcode($results->features[0]->properties->postcode);
+            $user->setAddress($results->features[0]->properties->name);
+
             $user->setStudent(true);
             $user->setCreatedAt(new \DateTimeImmutable('now'));
             $user->setUpdatedAt(new \DateTimeImmutable('now'));
@@ -87,7 +102,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/regb', name: 'app_register_business')]
-    public function regb(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function regb(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager, HttpClientInterface $httpClient): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -96,6 +111,20 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationBusinessFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // On refait un appel à l'API pour récupérer les coordonnées GPS de l'adresse
+            $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
+                'query' => [
+                    'q' => $form->get('address')->getData(),
+                ],
+            ]);
+            $results = json_decode($response->getContent());
+
+            $user->setLatitude($results->features[0]->geometry->coordinates[0]);
+            $user->setLongitude($results->features[0]->geometry->coordinates[1]);
+            $user->setCity($results->features[0]->properties->city);
+            $user->setPostcode($results->features[0]->properties->postcode);
+            $user->setAddress($results->features[0]->properties->name);
+
             $user->setStudent(false);
             $user->setCreatedAt(new \DateTimeImmutable('now'));
             $user->setUpdatedAt(new \DateTimeImmutable('now'));
@@ -111,9 +140,23 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             $business = new Business();
+
+            // On refait un appel à l'API pour récupérer les coordonnées GPS de l'adresse
+            $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
+                'query' => [
+                    'q' => $form->get('b_address')->getData(),
+                ],
+            ]);
+            $results = json_decode($response->getContent());
+
+            $business->setLatitude($results->features[0]->geometry->coordinates[0]);
+            $business->setLongitude($results->features[0]->geometry->coordinates[1]);
+            $business->setCity($results->features[0]->properties->city);
+            $business->setPostcode($results->features[0]->properties->postcode);
+
             $business->setOwner($user);
             $business->setName($form->get('b_name')->getData());
-            $business->setAddress($form->get('b_address')->getData());
+            $business->setAddress($results->features[0]->properties->name);
             $business->setPhone($form->get('b_phone')->getData());
             $business->setSiret($form->get('b_siret')->getData());
             $business->setActivities($form->get('b_activities')->getData());

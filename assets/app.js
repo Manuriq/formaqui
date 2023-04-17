@@ -38,3 +38,7 @@ searchInput.addEventListener('input', function() {
             searchInput.autocomplete.update(suggestions);
         });
 });*/
+
+function distance(userAddress, jobAddress){
+    console.log(userAddress, jobAddress)
+}

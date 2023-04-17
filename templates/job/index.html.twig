@@ -35,16 +35,34 @@
             <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-auto">
-                        <img src="{{ asset('build/images/entreprise.png') }}" class="img-thumbnail" width="48px" height="48px">
+                        {% if job.business.owner.imageName is null %}
+                            <img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
+                        {% else %}
+                            <img src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
+                        {% endif %}
                     </div>
                     <div class="col-auto">
-                        <span class="fw-bold">Crèche</span>
+                        <span class="fw-bold">
+                            {% for job.business.activites as activites %}
+                                test
+                            {% endfor %}
+                        </span>
                     </div>
                 </div>
                 <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-                <span class="job-desc">{{ job.business.name }}</span>
+                <span class="job-desc">{{ job.business.name }} • {{ job.business.city }}, {{ job.business.postcode }}</span>
                 <div class="col-12 mt-2">
                     <ul class="list-inline">
+                    {% set positions = {
+                        id: job.id,
+                        userLatitude: app.user.latitude,
+                        userLongitude: app.user.longitude,
+                        businessLatitude: job.business.latitude,
+                        businessLongitude: job.business.longitude,
+                    } %}
+                    <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+                        {{ job.business.address }}
+                    </li>
                     {% for tag in job.tags %}
                         <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
                     {% endfor %}
@@ -60,4 +78,52 @@
         </div>
         {% endfor %}
     </div>
+    <script>
+
+    /**
+    * Grab data attribute objects with vanilla JavaScript (ES6)
+    */
+    document.addEventListener('DOMContentLoaded', () => {
+
+        function distanceCalc(lat1, lon1, lat2, lon2, unit) {
+            if ((lat1 == lat2) && (lon1 == lon2)) {
+                return 0;
+            }
+            else {
+                var radlat1 = Math.PI * lat1/180;
+                var radlat2 = Math.PI * lat2/180;
+                var theta = lon1-lon2;
+                var radtheta = Math.PI * theta/180;
+                var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+                if (dist > 1) {
+                    dist = 1;
+                }
+                dist = Math.acos(dist);
+                dist = dist * 180/Math.PI;
+                dist = dist * 60 * 1.1515;
+                if (unit=="K") { dist = dist * 1.609344 }
+                if (unit=="N") { dist = dist * 0.8684 }
+                return dist;
+            }
+        }
+
+        // Select elements by their data attribute
+        const positions =
+            document.querySelectorAll('[data-entry-info]');
+
+        // Map over each element and extract the data value
+        const infoPositions =
+            Array.from(positions).map(
+                item => JSON.parse(item.dataset.entryInfo)
+            );
+
+        infoPositions.map(infoPosition => {
+            
+            let distance = distanceCalc(infoPosition.userLatitude, infoPosition.userLongitude, infoPosition.businessLatitude, infoPosition.businessLongitude, 'K');
+            let distanceRounded = Math.round(distance * 1) / 1;
+            let distanceElement = document.getElementById(infoPosition.id);
+            distanceElement.innerHTML = distanceRounded + ' km';
+        })
+    });
+    </script>
 {% endblock %}
