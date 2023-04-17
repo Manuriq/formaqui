@@ -4,11 +4,13 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -98,6 +100,18 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => "Numéro de téléphone",
+            ])
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Photo de profile',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'download_label' => false,
+                'delete_label' => false,
+                'asset_helper' => true,
+                'attr' => [
+                    'class' => 'form-control-file',
+                ],
             ])
         ;
     }

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
@@ -189,6 +190,18 @@ class RegistrationBusinessFormType extends AbstractType
                     ]),
                 ],
                 'label' => "Spécialitées de l'entreprise",
+            ])
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image de l\'entreprise',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'download_label' => false,
+                'delete_label' => false,
+                'asset_helper' => true,
+                'attr' => [
+                    'class' => 'form-control-file',
+                ],
             ])
         ;
     }

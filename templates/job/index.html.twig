@@ -17,7 +17,7 @@
             </form>
         </div>
         <div class="col-auto">
-            <img class="mx-auto d-block" height="54px" src="./images/filter.svg">
+            <img class="mx-auto d-block" height="54px" src="{{ asset('build/images/filter.svg') }}">
         </div>
     </div>
     <div class="row justify-content-between align-items-center">
@@ -31,25 +31,27 @@
         </div>
         {% endif %}
         {% for job in jobs %}
-        <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
-            <div class="row justify-content-between align-items-center">
-                <div class="col-auto">
-                    <img src="./images/entreprise.png" class="img-thumbnail" width="48px" height="48px">
+        <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color">
+            <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                        <img src="{{ asset('build/images/entreprise.png') }}" class="img-thumbnail" width="48px" height="48px">
+                    </div>
+                    <div class="col-auto">
+                        <span class="fw-bold">Crèche</span>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <span class="fw-bold">Crèche</span>
+                <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
+                <span class="job-desc">{{ job.business.name }}</span>
+                <div class="col-12 mt-2">
+                    <ul class="list-inline">
+                    {% for tag in job.tags %}
+                        <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+                    {% endfor %}
+                    </ul>
                 </div>
             </div>
-            <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-            <span class="job-desc">{{ job.business.name }}</span>
-            <div class="col-12 mt-2">
-                <ul class="list-inline">
-                    <li class="list-inline-item badge badge-aquiform">CDI</li>
-                    <li class="list-inline-item badge badge-aquiform">Bruge</li>
-                    <li class="list-inline-item badge badge-aquiform">35H</li>
-                </ul>
-            </div>
-        </div>
+        </a>
         {% else %}
         <div class="col-11">
             <div class="alert alert-warning text-center" role="alert">

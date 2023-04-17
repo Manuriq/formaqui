@@ -56,7 +56,7 @@ class JobType extends AbstractType
             ->add('state', CheckboxType::class, [
                 'mapped' => true,
                 'required' => false,
-                'label' => "Statut de votre offre (Actif ou Inactif)",
+                'label' => "Statut de votre offre (Actif / Inactif)",
             ])
         ;
     }
