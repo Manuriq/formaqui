@@ -43,8 +43,8 @@
                     </div>
                     <div class="col-auto">
                         <span class="fw-bold">
-                            {% for job.business.activites as activites %}
-                                test
+                            {% for activite in job.business.activities %}
+                                {{ activite }} 
                             {% endfor %}
                         </span>
                     </div>
