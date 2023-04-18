@@ -34,7 +34,7 @@ class Job
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?bool $state = null;
+    private ?bool $state = true;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private array $tags = [];

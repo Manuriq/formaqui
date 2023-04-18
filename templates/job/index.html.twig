@@ -52,7 +52,6 @@
                 <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
                 <span class="job-desc">{{ job.business.name }} • {{ job.business.city }}, {{ job.business.postcode }}</span>
                 <div class="col-12 mt-2">
-                    <ul class="list-inline">
                     {% set positions = {
                         id: job.id,
                         userLatitude: app.user.latitude,
@@ -60,9 +59,10 @@
                         businessLatitude: job.business.latitude,
                         businessLongitude: job.business.longitude,
                     } %}
-                    <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-                        {{ job.business.address }}
-                    </li>
+                    <ul class="list-inline">
+                        <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+                            {{ job.business.name }}
+                        </li>
                     {% for tag in job.tags %}
                         <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
                     {% endfor %}

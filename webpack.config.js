@@ -9,7 +9,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
-
+    .enableVersioning(Encore.isProduction())
     .copyFiles({
                 // copy any images in assets/images to the output "images" directory
                 from: './assets/images',
