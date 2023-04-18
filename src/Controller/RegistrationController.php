@@ -161,7 +161,7 @@ class RegistrationController extends AbstractController
             $business->setSiret($form->get('b_siret')->getData());
             $business->setActivities($form->get('b_activities')->getData());
             $business->setDescription($form->get('b_description')->getData());
-            $business->setSpeciales($form->get('b_speciales')->getData());
+            $business->setWebsite($form->get('b_website')->getData());
             $business->setCreatedAt(new \DateTimeImmutable('now'));
             $business->setUpdatedAt(new \DateTimeImmutable('now'));
 

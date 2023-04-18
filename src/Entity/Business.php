@@ -59,6 +59,9 @@ class Business
     #[ORM\Column(length: 255)]
     private ?string $longitude = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $website = null;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -122,9 +125,13 @@ class Business
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
-        $this->description = $description;
+        if($description === null){
+            $this->description = "";
+        }else{
+            $this->description = $description;
+        }
 
         return $this;
     }
@@ -251,6 +258,18 @@ class Business
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
 
         return $this;
     }

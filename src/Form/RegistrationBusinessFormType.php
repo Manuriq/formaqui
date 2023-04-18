@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -13,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -24,7 +26,13 @@ class RegistrationBusinessFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new Email([
+                        'message' => 'Entrez une adresse email valide',
+                    ]),
+                ]
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -109,7 +117,7 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez l\'adresse de votre entreprise',
                     ]),
                 ],
-                'label' => "Adresse de l'entreprise",
+                'label' => "Adresse du siege sociale",
                 'autocomplete' => true,
                 'autocomplete_url' => "autocomplete/",
                 'tom_select_options' => [
@@ -126,6 +134,12 @@ class RegistrationBusinessFormType extends AbstractType
                 ],
                 'label' => "Numéro de téléphone de l'entreprise",
             ])
+            ->add('b_website', TextType::class, [
+                'mapped' => false,
+                'required' => false,
+                'attr' => ['placeholder' => 'Facultatif'],
+                'label' => "Site internet de votre entreprise",
+            ])
             ->add('b_siret', TextType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -133,16 +147,16 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez le numéro de SIRET de votre entreprise',
                     ]),
                 ],
-                'label' => "Numéro de SIRET de l'entreprise",
+                'label' => "Numéro de SIRET de votre entreprise",
             ])
             ->add('b_activities', ChoiceType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Entrez l\'activité de votre entreprise',
+                        'message' => 'Choisissez au moins une activité',
                     ]),
                 ],
-                'label' => "Activité de l'entreprise",
+                'label' => "Activités de votre entreprise",
                 'choices' => [
                     'Multi Accueil' => 'Multi Accueil',
                     'Crèche' => 'Crèche',
@@ -160,22 +174,14 @@ class RegistrationBusinessFormType extends AbstractType
             ->add('b_description', TextareaType::class, [
                 'mapped' => false,
                 'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez la description de votre entreprise',
-                    ]),
-                    new Length([
-                        // 'min' => 10,
-                        // 'minMessage' => 'Votre description doit faire au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 255,
-                        'maxMessage' => 'Votre description doit faire au maximum {{ limit }} caractères',
-                    ])
+                'attr' => [
+                    'placeholder' => "Facultatif",
+                    'rows' => 5,
                 ],
-                'label' => "Description de l'entreprise",
+                'label' => "Description de votre entreprise",
             ])
             ->add('imageFile', VichFileType::class, [
-                'label' => 'Image de l\'entreprise',
+                'label' => 'Logo de votre entreprise (facultatif)',
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => false,
@@ -184,6 +190,7 @@ class RegistrationBusinessFormType extends AbstractType
                 'asset_helper' => true,
                 'attr' => [
                     'class' => 'form-control-file',
+                    'placeholder' => 'Choisissez une image',
                 ],
             ])
         ;
