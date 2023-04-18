@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="row justify-content-around mb-4 align-items-center mt-4">
-    <img class="mx-auto d-block mb-4" height="186px" width="186px" src="./images/icon.svg">
+    <img class="mx-auto d-block mb-4" height="186px" width="186px" src="{{ asset('build/images/icon.svg') }}">
     <h1 class="page-h1 mt-4 text-center">Une application crée par Form’Aqui 💡</h1>
     <span class="job-desc mt-4 text-center">L’appli qui met en relation les employeurs, les professionnels de la Petite Enfance et les candidats à l’alternance</span>
     {% if app.user %}

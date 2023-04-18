@@ -69,15 +69,6 @@ class RegistrationBusinessFormType extends AbstractType
                 ],
                 'label' => "Nom",
             ])
-            ->add('age', BirthdayType::class, [
-                'mapped' => true,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez votre date de naissance',
-                    ]),
-                ],
-                'label' => "Date de naissance",
-            ])
             ->add('address', TextType::class, [
                 'mapped' => true,
                 'constraints' => [
@@ -168,6 +159,7 @@ class RegistrationBusinessFormType extends AbstractType
             ])
             ->add('b_description', TextareaType::class, [
                 'mapped' => false,
+                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez la description de votre entreprise',
@@ -181,15 +173,6 @@ class RegistrationBusinessFormType extends AbstractType
                     ])
                 ],
                 'label' => "Description de l'entreprise",
-            ])
-            ->add('b_speciales', TextType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez les spécialitées de votre entreprise',
-                    ]),
-                ],
-                'label' => "Spécialitées de l'entreprise",
             ])
             ->add('imageFile', VichFileType::class, [
                 'label' => 'Image de l\'entreprise',

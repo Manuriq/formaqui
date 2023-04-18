@@ -28,11 +28,8 @@ class Business
     #[ORM\Column(length: 255)]
     private ?string $siret = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $speciales = null;
 
     #[ORM\ManyToOne(inversedBy: 'businesses')]
     #[ORM\JoinColumn(nullable: false)]
@@ -128,18 +125,6 @@ class Business
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSpeciales(): ?string
-    {
-        return $this->speciales;
-    }
-
-    public function setSpeciales(string $speciales): self
-    {
-        $this->speciales = $speciales;
 
         return $this;
     }
