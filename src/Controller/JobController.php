@@ -34,7 +34,13 @@ class JobController extends AbstractController
         }
 
         $job = new Job();
-        $form = $this->createForm(JobType::class, $job, array('user' => $this->getUser()));
+    
+        $form = $this->createForm(JobType::class, $job, array(
+                'address' => $this->getUser()->getBusinesses()->first()->getAddress(),
+                'city' => $this->getUser()->getBusinesses()->first()->getCity(),
+                'postcode' => $this->getUser()->getBusinesses()->first()->getPostcode()
+            )
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

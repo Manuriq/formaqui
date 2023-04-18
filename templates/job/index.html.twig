@@ -5,11 +5,17 @@
 
 {% block body %}
     {% if app.user %}
-    <h1 class="page-h1 mt-4 mb-4">Salut {{ app.user.firstName }},<br>
+        {% if is_granted('ROLE_BOSS') %}
+            <h1 class="page-h1 mt-4 mb-4">Bonjour {{ app.user.firstName }},<br>
+            Déposez une offre d'emploi</h1>
+        {% else %}
+            <h1 class="page-h1 mt-4 mb-4">Bonjour {{ app.user.firstName }},<br>
+            Trouvez votre emploi de rêve</h1>
+        {% endif %}
     {% else %}
-    <h1 class="page-h1 mt-4 mb-4">Bienvenue,<br>
+        <h1 class="page-h1 mt-4 mb-4">Bienvenue<br>,
+        Trouvez votre emploi de rêve</h1></h1>
     {% endif %}
-    Trouvez votre emploi de rêve</h1>
     <div class="row justify-content-around mb-4 align-items-center">
         <div class="col-9">
             <form action="">
@@ -21,7 +27,7 @@
         </div>
     </div>
     <div class="row justify-content-between align-items-center">
-        <h3 class="page-h3 col-auto mb-4">Emplois récents</h3>
+        <h3 class="page-h3 col-auto mb-4">{{ is_granted('ROLE_BOSS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
         <a href="" class="col-auto text-end">Voir tout</a>
     </div>
     <div class="row justify-content-around">
@@ -125,5 +131,19 @@
             distanceElement.innerHTML = distanceRounded + ' km';
         })
     });
+
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("job_tags_1");
+        // Get the output text
+        var text = document.getElementById("text");
+
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true){
+        text.style.display = "block";
+    } else {
+        text.style.display = "none";
+    }
+} 
     </script>
 {% endblock %}

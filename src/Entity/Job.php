@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\JobRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\JobRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
@@ -38,6 +39,21 @@ class Job
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private array $tags = [];
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pay = null;
+
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private array $bonus = [];
+
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private array $qualifications = [];
+
+    #[ORM\Column(nullable: true)]
+    private ?DateTime $startJob = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $stopJob = null;
 
     public function getId(): ?int
     {
@@ -124,6 +140,66 @@ class Job
     public function setTags(?array $tags): self
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getPay(): ?string
+    {
+        return $this->pay;
+    }
+
+    public function setPay(?string $pay): self
+    {
+        $this->pay = $pay;
+
+        return $this;
+    }
+
+    public function getBonus(): array
+    {
+        return $this->bonus;
+    }
+
+    public function setBonus(?array $bonus): self
+    {
+        $this->bonus = $bonus;
+
+        return $this;
+    }
+
+    public function getQualifications(): array
+    {
+        return $this->qualifications;
+    }
+
+    public function setQualifications(?array $qualifications): self
+    {
+        $this->qualifications = $qualifications;
+
+        return $this;
+    }
+
+    public function getStartJob(): ?\DateTime
+    {
+        return $this->startJob;
+    }
+
+    public function setStartJob(\DateTime $startJob): self
+    {
+        $this->startJob = $startJob;
+
+        return $this;
+    }
+
+    public function getStopJob(): ?\DateTime
+    {
+        return $this->stopJob;
+    }
+
+    public function setStopJob(?\DateTime $stopJob): self
+    {
+        $this->stopJob = $stopJob;
 
         return $this;
     }
