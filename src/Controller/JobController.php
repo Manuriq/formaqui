@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/job')]
@@ -23,7 +24,7 @@ class JobController extends AbstractController
     }
 
     #[Route('/new', name: 'app_job_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, JobRepository $jobRepository): Response
+    public function new(Request $request, JobRepository $jobRepository, HttpClientInterface $httpClient): Response
     {
         // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
         if (!$this->isGranted('ROLE_BOSS')) {
@@ -34,21 +35,6 @@ class JobController extends AbstractController
         }
 
         $job = new Job();
-
-        $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
-            'query' => [
-                'q' => $form->get('address')->getData(),
-            ],
-        ]);
-        $results = json_decode($response->getContent());
-
-        $job->setLatitude($results->features[0]->geometry->coordinates[0]);
-        $job->setLongitude($results->features[0]->geometry->coordinates[1]);
-        $job->setCity($results->features[0]->properties->city);
-        $job->setPostcode($results->features[0]->properties->postcode);
-        $job->setAddress($results->features[0]->properties->label);
-        $job->setStreet($results->features[0]->properties->name);
-
     
         $form = $this->createForm(JobType::class, $job, array(
                 'address' => $this->getUser()->getBusinesses()->first()->getAddress(),
@@ -59,6 +45,21 @@ class JobController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
+                'query' => [
+                    'q' => $form->get('address')->getData(),
+                ],
+            ]);
+            $results = json_decode($response->getContent());
+    
+            $job->setLatitude($results->features[0]->geometry->coordinates[0]);
+            $job->setLongitude($results->features[0]->geometry->coordinates[1]);
+            $job->setCity($results->features[0]->properties->city);
+            $job->setPostcode($results->features[0]->properties->postcode);
+            $job->setAddress($results->features[0]->properties->label);
+            $job->setStreet($results->features[0]->properties->name);
+
             $job->setTags($form->get('tags')->getData());
             $job->setBusiness($this->getUser()->getBusinesses()->first());
             $jobRepository->save($job, true);

@@ -49,21 +49,19 @@
                     </div>
                     <div class="col-auto">
                         <span class="fw-bold">
-                            {% for activite in job.business.activities %}
-                                {{ activite }} 
-                            {% endfor %}
+                            {{ job.pay }} € / mois
                         </span>
                     </div>
                 </div>
                 <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-                <span class="job-desc">{{ job.business.name }} • {{ job.business.city }}, {{ job.business.postcode }}</span>
+                <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
                 <div class="col-12 mt-2">
                     {% set positions = {
                         id: job.id,
                         userLatitude: app.user.latitude,
                         userLongitude: app.user.longitude,
-                        businessLatitude: job.business.latitude,
-                        businessLongitude: job.business.longitude,
+                        businessLatitude: job.latitude,
+                        businessLongitude: job.longitude,
                     } %}
                     <ul class="list-inline">
                         <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
@@ -71,6 +69,9 @@
                         </li>
                     {% for tag in job.tags %}
                         <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+                    {% endfor %}
+                    {% for activite in job.business.activities %}
+                        <li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
                     {% endfor %}
                     </ul>
                 </div>
