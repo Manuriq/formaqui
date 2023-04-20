@@ -23,7 +23,7 @@ class JobType extends AbstractType
         $postcode = $options['postcode'];
         $city = $options['city'];
 
-        $businessAdress = 'Voulez vous utiliser cette adresse? '. $address .', ' . $city . ', ' . $postcode .'';
+        $businessAdress = 'Voulez vous utiliser cette adresse pour votre offre ? '. $address .', ' . $city . ', ' . $postcode .'';
         $builder
             ->add('title', TextType::class, [
                 'mapped' => true,
@@ -76,6 +76,7 @@ class JobType extends AbstractType
                     ]),
                 ],
                 'label' => "Date de fin du contrat",
+                'label_attr' => ['id' => 'label_job_stopJob']
             ])
             ->add('pay', TextType::class, [
                 'mapped' => true,
@@ -115,49 +116,49 @@ class JobType extends AbstractType
                     'placeholder' => "Rechercher une adresse"
                 ]
             ])
-            ->add('checkbox_qualifications', ChoiceType::class, [
-                'mapped' => false,
-                'label'    => 'Diplome exigé?',
-                'required' => true,
-                'choices' => [
-                    'Oui' => "Oui",
-                    'Non' => "Non",
-                ],
-                'multiple' => false,
-                'expanded' => false,
-            ])
-            ->add('qualifications', ChoiceType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Quelles sont les qualifications requises pour votre offre ?',
-                    ]),
-                ],
-                'choices' => [
-                    'CDI' => "CDI",
-                    'CDD' => "CDD",
-                    'Alternance' => "Alternance",
-                ],
-                'label' => "Quelles sont les qualifications requises pour votre offre ?",
-                'multiple' => true,
-                'expanded' => true,
-            ])
-            ->add('bonus', ChoiceType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Choisissez des avantages pour votre offre',
-                    ]),
-                ],
-                'choices' => [
-                    'A DEFINIR 1' => "A DEFINIR 1",
-                    'A DEFINIR 2' => "A DEFINIR 2",
-                    'A DEFINIR 3' => "A DEFINIR 3",
-                ],
-                'label' => "Choisissez des avantages pour votre offre",
-                'multiple' => true,
-                'expanded' => true,
-            ])
+            // ->add('checkbox_qualifications', ChoiceType::class, [
+            //     'mapped' => false,
+            //     'label'    => 'Diplome exigé?',
+            //     'required' => true,
+            //     'choices' => [
+            //         'Oui' => "Oui",
+            //         'Non' => "Non",
+            //     ],
+            //     'multiple' => false,
+            //     'expanded' => false,
+            // ])
+            // ->add('qualifications', ChoiceType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Quelles sont les qualifications requises pour votre offre ?',
+            //         ]),
+            //     ],
+            //     'choices' => [
+            //         'CDI' => "CDI",
+            //         'CDD' => "CDD",
+            //         'Alternance' => "Alternance",
+            //     ],
+            //     'label' => "Quelles sont les qualifications requises pour votre offre ?",
+            //     'multiple' => true,
+            //     'expanded' => true,
+            // ])
+            // ->add('bonus', ChoiceType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Choisissez des avantages pour votre offre',
+            //         ]),
+            //     ],
+            //     'choices' => [
+            //         'A DEFINIR 1' => "A DEFINIR 1",
+            //         'A DEFINIR 2' => "A DEFINIR 2",
+            //         'A DEFINIR 3' => "A DEFINIR 3",
+            //     ],
+            //     'label' => "Choisissez des avantages pour votre offre",
+            //     'multiple' => true,
+            //     'expanded' => true,
+            // ])
         ;
     }
 

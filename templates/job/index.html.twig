@@ -13,7 +13,7 @@
             Trouvez votre emploi de rêve</h1>
         {% endif %}
     {% else %}
-        <h1 class="page-h1 mt-4 mb-4">Bienvenue<br>,
+        <h1 class="page-h1 mt-4 mb-4">Bienvenue<br>
         Trouvez votre emploi de rêve</h1></h1>
     {% endif %}
     <div class="row justify-content-around mb-4 align-items-center">
@@ -84,66 +84,4 @@
         </div>
         {% endfor %}
     </div>
-    <script>
-
-    /**
-    * Grab data attribute objects with vanilla JavaScript (ES6)
-    */
-    document.addEventListener('DOMContentLoaded', () => {
-
-        function distanceCalc(lat1, lon1, lat2, lon2, unit) {
-            if ((lat1 == lat2) && (lon1 == lon2)) {
-                return 0;
-            }
-            else {
-                var radlat1 = Math.PI * lat1/180;
-                var radlat2 = Math.PI * lat2/180;
-                var theta = lon1-lon2;
-                var radtheta = Math.PI * theta/180;
-                var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-                if (dist > 1) {
-                    dist = 1;
-                }
-                dist = Math.acos(dist);
-                dist = dist * 180/Math.PI;
-                dist = dist * 60 * 1.1515;
-                if (unit=="K") { dist = dist * 1.609344 }
-                if (unit=="N") { dist = dist * 0.8684 }
-                return dist;
-            }
-        }
-
-        // Select elements by their data attribute
-        const positions =
-            document.querySelectorAll('[data-entry-info]');
-
-        // Map over each element and extract the data value
-        const infoPositions =
-            Array.from(positions).map(
-                item => JSON.parse(item.dataset.entryInfo)
-            );
-
-        infoPositions.map(infoPosition => {
-            
-            let distance = distanceCalc(infoPosition.userLatitude, infoPosition.userLongitude, infoPosition.businessLatitude, infoPosition.businessLongitude, 'K');
-            let distanceRounded = Math.round(distance * 1) / 1;
-            let distanceElement = document.getElementById(infoPosition.id);
-            distanceElement.innerHTML = distanceRounded + ' km';
-        })
-    });
-
-    function myFunction() {
-        // Get the checkbox
-        var checkBox = document.getElementById("job_tags_1");
-        // Get the output text
-        var text = document.getElementById("text");
-
-    // If the checkbox is checked, display the output text
-    if (checkBox.checked == true){
-        text.style.display = "block";
-    } else {
-        text.style.display = "none";
-    }
-} 
-    </script>
 {% endblock %}
