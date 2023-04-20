@@ -96,6 +96,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\Column(length: 255)]
     private ?string $longitude = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $street = null;
+
     public function __construct()
     {
         $this->businesses = new ArrayCollection();
@@ -420,6 +423,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
 
         return $this;
     }

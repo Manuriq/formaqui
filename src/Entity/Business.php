@@ -62,6 +62,9 @@ class Business
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $street = null;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -270,6 +273,18 @@ class Business
     public function setWebsite(?string $website): self
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
 
         return $this;
     }

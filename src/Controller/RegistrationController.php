@@ -63,7 +63,8 @@ class RegistrationController extends AbstractController
             $user->setLongitude($results->features[0]->geometry->coordinates[1]);
             $user->setCity($results->features[0]->properties->city);
             $user->setPostcode($results->features[0]->properties->postcode);
-            $user->setAddress($results->features[0]->properties->name);
+            $user->setAddress($results->features[0]->properties->label);
+            $user->setStreet($results->features[0]->properties->name);
 
             $user->setStudent(true);
             $user->setCreatedAt(new \DateTimeImmutable('now'));
@@ -123,7 +124,8 @@ class RegistrationController extends AbstractController
             $user->setLongitude($results->features[0]->geometry->coordinates[1]);
             $user->setCity($results->features[0]->properties->city);
             $user->setPostcode($results->features[0]->properties->postcode);
-            $user->setAddress($results->features[0]->properties->name);
+            $user->setAddress($results->features[0]->properties->label);
+            $user->setStreet($results->features[0]->properties->name);
 
             $user->setStudent(false);
             $user->setCreatedAt(new \DateTimeImmutable('now'));
@@ -153,10 +155,11 @@ class RegistrationController extends AbstractController
             $business->setLongitude($results->features[0]->geometry->coordinates[1]);
             $business->setCity($results->features[0]->properties->city);
             $business->setPostcode($results->features[0]->properties->postcode);
+            $business->setAddress($results->features[0]->properties->label);
+            $business->setStreet($results->features[0]->properties->name);
 
             $business->setOwner($user);
             $business->setName($form->get('b_name')->getData());
-            $business->setAddress($results->features[0]->properties->name);
             $business->setPhone($form->get('b_phone')->getData());
             $business->setSiret($form->get('b_siret')->getData());
             $business->setActivities($form->get('b_activities')->getData());

@@ -3,7 +3,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>FormaKids - {% block title %}Bienvenue!{% endblock %}</title>
-        <link rel="icon" href="./images/icon.svg">
+        <link rel="icon" href="{{ asset('build/images/icon.svg') }}">
         <script src="https://cdn.jsdelivr.net/npm/slim-select/dist/slimselect.min.js"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}

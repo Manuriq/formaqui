@@ -5,9 +5,6 @@
     {{ form_row(form.startJob) }}
     {{ form_row(form.stopJob) }}
     {{ form_row(form.pay) }}
-    {{ form_row(form.checkbox_address) }}
-    <div id="address">
-        {{ form_row(form.address) }}
-    </div>
+    {{ form_row(form.address) }}
     <button class="btn btn-primary mb-2">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

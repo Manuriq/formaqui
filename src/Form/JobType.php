@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Job;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -23,7 +25,7 @@ class JobType extends AbstractType
         $postcode = $options['postcode'];
         $city = $options['city'];
 
-        $businessAdress = 'Voulez vous utiliser cette adresse pour votre offre ? '. $address .', ' . $city . ', ' . $postcode .'';
+        $businessAdress = $address .' ' . $city . ' ' . $postcode;
         $builder
             ->add('title', TextType::class, [
                 'mapped' => true,
@@ -47,7 +49,7 @@ class JobType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Choisissez des tags pour votre offre',
+                        'message' => 'Choisissez un ou plusieurs types de contrat',
                     ]),
                 ],
                 'choices' => [
@@ -78,42 +80,28 @@ class JobType extends AbstractType
                 'label' => "Date de fin du contrat",
                 'label_attr' => ['id' => 'label_job_stopJob']
             ])
-            ->add('pay', TextType::class, [
+            ->add('pay', NumberType::class, [
                 'mapped' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez le salaire de votre offre',
-                    ]),
+                    ])
                 ],
                 'label' => "Salaire de votre offre (en € brut) par mois",
                 'attr' => [
                     'placeholder' => 'Ex: 2000€'
                 ]
             ])
-            ->add('checkbox_address', ChoiceType::class, [
-                'mapped' => false,
-                'label'    => $businessAdress,
-                'required' => true,
-                'choices' => [
-                    'Oui' => "Oui",
-                    'Non' => "Non",
-                ],
-                'multiple' => false,
-                'expanded' => false,
-            ])
             ->add('address', TextType::class, [
+                'required' => false,
                 'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez l\'adresse de votre entreprise',
-                    ]),
-                ],
                 'label' => "Adresse de l'offre",
                 'autocomplete' => true,
-                'autocomplete_url' => "autocomplete/",
+                'empty_data' => $businessAdress,
+                'autocomplete_url' => "../autocomplete/",
                 'tom_select_options' => [
                     'maxItems' => 1,
-                    'placeholder' => "Rechercher une adresse"
+                    'placeholder' => $businessAdress
                 ]
             ])
             // ->add('checkbox_qualifications', ChoiceType::class, [

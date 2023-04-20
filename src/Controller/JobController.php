@@ -34,6 +34,21 @@ class JobController extends AbstractController
         }
 
         $job = new Job();
+
+        $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
+            'query' => [
+                'q' => $form->get('address')->getData(),
+            ],
+        ]);
+        $results = json_decode($response->getContent());
+
+        $job->setLatitude($results->features[0]->geometry->coordinates[0]);
+        $job->setLongitude($results->features[0]->geometry->coordinates[1]);
+        $job->setCity($results->features[0]->properties->city);
+        $job->setPostcode($results->features[0]->properties->postcode);
+        $job->setAddress($results->features[0]->properties->label);
+        $job->setStreet($results->features[0]->properties->name);
+
     
         $form = $this->createForm(JobType::class, $job, array(
                 'address' => $this->getUser()->getBusinesses()->first()->getAddress(),
