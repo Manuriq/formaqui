@@ -80,6 +80,22 @@ class JobType extends AbstractType
                 'label' => "Date de fin du contrat",
                 'label_attr' => ['id' => 'label_job_stopJob']
             ])
+            ->add('pay_choice', ChoiceType::class, [
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Choisissez comment vous souhaitez payer pour cette offre'
+                    ]),
+                ],
+                'choices' => [
+                    'Brut annuelle' => "0",
+                    'Brut mensuelle' => "1",
+                    'Brut horaire' => "2",
+                ],
+                'label' => "Choisissez comment vous souhaitez payer pour cette offre",
+                'multiple' => false,
+                'expanded' => true,
+            ])
             ->add('pay', NumberType::class, [
                 'mapped' => true,
                 'constraints' => [
@@ -87,9 +103,9 @@ class JobType extends AbstractType
                         'message' => 'Entrez le salaire de votre offre',
                     ])
                 ],
-                'label' => "Salaire de votre offre (en € brut) par mois",
+                'label' => "Salaire de votre offre",
                 'attr' => [
-                    'placeholder' => 'Ex: 2000€'
+                    'placeholder' => 'Ex: 20000€/an ou 1200€/mois 12€/h', 
                 ]
             ])
             ->add('address', TextType::class, [

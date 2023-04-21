@@ -112,20 +112,6 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationBusinessFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // On refait un appel à l'API pour récupérer les coordonnées GPS de l'adresse
-            $response = $httpClient->request('GET', 'https://api-adresse.data.gouv.fr/search/', [
-                'query' => [
-                    'q' => $form->get('address')->getData(),
-                ],
-            ]);
-            $results = json_decode($response->getContent());
-
-            $user->setLatitude($results->features[0]->geometry->coordinates[0]);
-            $user->setLongitude($results->features[0]->geometry->coordinates[1]);
-            $user->setCity($results->features[0]->properties->city);
-            $user->setPostcode($results->features[0]->properties->postcode);
-            $user->setAddress($results->features[0]->properties->label);
-            $user->setStreet($results->features[0]->properties->name);
 
             $user->setStudent(false);
             $user->setCreatedAt(new \DateTimeImmutable('now'));

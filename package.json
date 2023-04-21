@@ -7,7 +7,6 @@
         "@popperjs/core": "^2.11.6",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
-        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^4.0.0",
         "autoprefixer": "^10.4.14",
         "bootstrap": "^5.2.3",

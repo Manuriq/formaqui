@@ -77,30 +77,6 @@ class RegistrationBusinessFormType extends AbstractType
                 ],
                 'label' => "Nom",
             ])
-            ->add('address', TextType::class, [
-                'mapped' => true,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez votre adresse',
-                    ]),
-                ],
-                'label' => "Adresse",
-                'autocomplete' => true,
-                'autocomplete_url' => "autocomplete/",
-                'tom_select_options' => [
-                    'maxItems' => 1,
-                    'placeholder' => "Rechercher une adresse"
-                ]
-            ])
-            ->add('phone', TelType::class, [
-                'mapped' => true,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez votre numéro de téléphone',
-                    ]),
-                ],
-                'label' => "Numéro de téléphone",
-            ])
             ->add('b_name', TextType::class, [
                 'mapped' => false,
                 'constraints' => [

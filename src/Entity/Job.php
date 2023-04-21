@@ -73,6 +73,9 @@ class Job
     #[ORM\Column(length: 255)]
     private ?string $longitude = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $pay_choice = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -290,6 +293,18 @@ class Job
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getPayChoice(): ?string
+    {
+        return $this->pay_choice;
+    }
+
+    public function setPayChoice(string $pay_choice): self
+    {
+        $this->pay_choice = $pay_choice;
 
         return $this;
     }

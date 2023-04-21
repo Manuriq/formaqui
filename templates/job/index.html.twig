@@ -30,15 +30,15 @@
         <h3 class="page-h3 col-auto mb-4">{{ is_granted('ROLE_BOSS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
         <a href="" class="col-auto text-end">Voir tout</a>
     </div>
-    <div class="row justify-content-around">
+    <div class="row justify-content-around justify-content-md-center">
         {% if is_granted('ROLE_BOSS') %}
         <div class="col-11 mb-2">
             <a href="{{ path('app_job_new') }}" class="btn btn-primary">Ajouter une annonce</a>
         </div>
         {% endif %}
         {% for job in jobs %}
-        <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color">
-            <div class="col-11 col-md-3 card-formaqui mt-4 mb-4">
+        <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color col-11 col-md-4">
+            <div class="card-formaqui mt-4 mb-4">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-auto">
                         {% if job.business.owner.imageName is null %}
@@ -48,9 +48,19 @@
                         {% endif %}
                     </div>
                     <div class="col-auto">
+                    {% if job.PayChoice == 0 %}
                         <span class="fw-bold">
-                            {{ job.pay }} € / mois
+                            {{ job.pay }} € brut / an
                         </span>
+                    {% elseif job.PayChoice == 1 %}
+                        <span class="fw-bold">
+                            {{ job.pay }} € brut / mois
+                        </span>
+                    {% elseif job.PayChoice == 2 %}
+                        <span class="fw-bold">
+                            {{ job.pay }} € brut / heure
+                        </span>
+                        {% endif %}
                     </div>
                 </div>
                 <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>

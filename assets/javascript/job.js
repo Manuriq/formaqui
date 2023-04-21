@@ -1,15 +1,12 @@
 const $ = require('jquery');
 
-$("#job_stopJob").hide();
-$('#label_job_stopJob').hide();
+$("#stopJob").hide();
 
 $( "#job_tags_1" ).on("click", function() {
     if($(this).is(":checked")) {
-        $("#job_stopJob").show();
-        $('#label_job_stopJob').show();
+        $("#stopJob").show();
     }else{
-        $("#job_stopJob").hide();
-        $('#label_job_stopJob').hide();
+        $("#stopJob").hide();
     }
 });
 
