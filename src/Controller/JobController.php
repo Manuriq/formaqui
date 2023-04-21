@@ -139,4 +139,24 @@ class JobController extends AbstractController
 
         // return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/toggle/{id}-{toggle}', name: 'app_job_toggle', methods: ['GET'])]
+    public function toggle(Request $request, Job $job, JobRepository $jobRepository, $toggle): Response
+    {
+        if (!$this->getUser() == $job->getBusiness()->getOwner()) {
+            $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+        }
+
+        if ($toggle == 0) {
+            $job->setState(0);
+        } else {
+            $job->setState(1);
+        }
+
+        $jobRepository->save($job, true);
+
+        return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

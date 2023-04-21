@@ -34,57 +34,62 @@
         </div>
         {% endif %}
         {% for job in jobs %}
-            {% if job.business.owner.id == app.user.id or not is_granted('ROLE_BOSS') %}
-                <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color col-11 col-md-4">
-                    <div class="card-formaqui mt-4 mb-4">
-                        <div class="row justify-content-between align-items-center">
-                            <div class="col-auto">
-                                {% if job.business.owner.imageName is null %}
-                                    <img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
-                                {% else %}
-                                    <img src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
-                                {% endif %}
+            {% if not is_granted('ROLE_BOSS') or job.business.owner.id == app.user.id %}
+                {% if job.state == 1 or job.business.owner.id == app.user.id %}
+                    <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color col-11 col-md-4">
+                        <div class="card-formaqui mt-4 mb-4">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-auto">
+                                    {% if job.business.owner.imageName is null %}
+                                        <img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
+                                    {% else %}
+                                        <img src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
+                                    {% endif %}
+                                </div>
+                                <div class="col-auto">
+                                {% if job.PayChoice == 0 %}
+                                    <span class="fw-bold">
+                                        {{ job.pay }} € brut / an
+                                    </span>
+                                {% elseif job.PayChoice == 1 %}
+                                    <span class="fw-bold">
+                                        {{ job.pay }} € brut / mois
+                                    </span>
+                                {% elseif job.PayChoice == 2 %}
+                                    <span class="fw-bold">
+                                        {{ job.pay }} € brut / heure
+                                    </span>
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="col-auto">
-                            {% if job.PayChoice == 0 %}
-                                <span class="fw-bold">
-                                    {{ job.pay }} € brut / an
-                                </span>
-                            {% elseif job.PayChoice == 1 %}
-                                <span class="fw-bold">
-                                    {{ job.pay }} € brut / mois
-                                </span>
-                            {% elseif job.PayChoice == 2 %}
-                                <span class="fw-bold">
-                                    {{ job.pay }} € brut / heure
-                                </span>
-                                {% endif %}
+                            <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
+                            <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
+                            <div class="col-12 mt-2">
+                                {% set positions = {
+                                    id: job.id,
+                                    userLatitude: app.user.latitude,
+                                    userLongitude: app.user.longitude,
+                                    businessLatitude: job.latitude,
+                                    businessLongitude: job.longitude,
+                                } %}
+                                <ul class="list-inline">
+                                    {% if job.state == 0 %}
+                                        <li class="list-inline-item badge bg-danger">Annonce désactivée</li>
+                                    {% endif %}
+                                    <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+                                        {{ job.business.name }}
+                                    </li>
+                                {% for tag in job.tags %}
+                                    <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+                                {% endfor %}
+                                {% for activite in job.business.activities %}
+                                    <li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
+                                {% endfor %}
+                                </ul>
                             </div>
                         </div>
-                        <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-                        <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
-                        <div class="col-12 mt-2">
-                            {% set positions = {
-                                id: job.id,
-                                userLatitude: app.user.latitude,
-                                userLongitude: app.user.longitude,
-                                businessLatitude: job.latitude,
-                                businessLongitude: job.longitude,
-                            } %}
-                            <ul class="list-inline">
-                                <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-                                    {{ job.business.name }}
-                                </li>
-                            {% for tag in job.tags %}
-                                <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
-                            {% endfor %}
-                            {% for activite in job.business.activities %}
-                                <li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                {% endif %}
             {% endif %}
         {% else %}
         <div class="col-11">

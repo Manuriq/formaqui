@@ -47,6 +47,11 @@
             <div class="d-grid mb-2 d-md-block">
             {% if job.business.owner.id == app.user.id %}
                 <a href="{{ path('app_job_edit', {'id': job.id}) }}" class="btn btn-primary mb-2">Editer</a>
+                {% if job.state == 0 %}
+                    <a href="{{ path('app_job_toggle', {'id': job.id, 'toggle': 1}) }}" class="btn btn-primary mb-2">Activer l'annonce</a>
+                {% else %}
+                    <a href="{{ path('app_job_toggle', {'id': job.id, 'toggle': 0}) }}" class="btn btn-primary mb-2">Désactiver l'annonce</a>
+                {% endif %}
                 {{ include('job/_delete_form.html.twig') }}
             {% elseif not is_granted('ROLE_BOSS') %}
                 <a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
