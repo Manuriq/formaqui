@@ -3,6 +3,7 @@
 {% block title %}Inscription - Candidat{% endblock %}
 
 {% block body %}
+<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
@@ -28,10 +29,11 @@
         {{ form_row(registrationForm.b_description) }}
         {{ form_row(registrationForm.agreeTerms) }}
         <span>J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
-        <div class="d-grid gap-2 mb-4">
+        <div class="d-grid mb-2 d-md-block">
             <button type="submit" class="btn btn-primary btn-lg mt-4">Inscription</button>
         </div>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
 
 

@@ -5,6 +5,7 @@
 
 {% block body %}
     {% if app.user %}
+    <div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
         {% if is_granted('ROLE_BOSS') %}
             <h1 class="page-h1 mt-4 mb-4">Bonjour {{ app.user.firstName }},<br>
             Déposez une offre d'emploi</h1>
@@ -12,11 +13,10 @@
             <h1 class="page-h1 mt-4 mb-4">Bonjour {{ app.user.firstName }},<br>
             Trouvez votre emploi de rêve</h1>
         {% endif %}
-    {% else %}
-        <h1 class="page-h1 mt-4 mb-4">Bienvenue<br>
-        Trouvez votre emploi de rêve</h1></h1>
-    {% endif %}
-    <div class="row justify-content-around mb-4 align-items-center">
+        {% else %}
+            <h1 class="page-h1 mt-4 mb-4">Bienvenue<br>
+            Trouvez votre emploi de rêve</h1></h1>
+        {% endif %}
         <div class="col-9">
             <form action="">
                 <input type="text" class="form-control form-control-lg input-formaqui" placeholder="Recherche">
@@ -26,67 +26,72 @@
             <img class="mx-auto d-block" height="54px" src="{{ asset('build/images/filter.svg') }}">
         </div>
     </div>
-    <div class="row justify-content-between align-items-center">
-        <h3 class="page-h3 col-auto mb-4">{{ is_granted('ROLE_BOSS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
-        <a href="" class="col-auto text-end">Voir tout</a>
-    </div>
-    <div class="row justify-content-around justify-content-md-center">
+    <div class="row justify-content-around col-11  col-md-8 mb-4 align-items-center mt-4 mx-auto">
+        <h3 class="page-h3 col-auto mb-4 text-left">{{ is_granted('ROLE_BOSS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
         {% if is_granted('ROLE_BOSS') %}
         <div class="col-11 mb-2">
             <a href="{{ path('app_job_new') }}" class="btn btn-primary">Ajouter une annonce</a>
         </div>
         {% endif %}
         {% for job in jobs %}
-        <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color col-11 col-md-4">
-            <div class="card-formaqui mt-4 mb-4">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-auto">
-                        {% if job.business.owner.imageName is null %}
-                            <img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
-                        {% else %}
-                            <img src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
-                        {% endif %}
+            {% if job.business.owner.id == app.user.id or not is_granted('ROLE_BOSS') %}
+                <a href="{{ path('app_job_show', {'id': job.id }) }}" class="no-color col-11 col-md-4">
+                    <div class="card-formaqui mt-4 mb-4">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-auto">
+                                {% if job.business.owner.imageName is null %}
+                                    <img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
+                                {% else %}
+                                    <img src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
+                                {% endif %}
+                            </div>
+                            <div class="col-auto">
+                            {% if job.PayChoice == 0 %}
+                                <span class="fw-bold">
+                                    {{ job.pay }} € brut / an
+                                </span>
+                            {% elseif job.PayChoice == 1 %}
+                                <span class="fw-bold">
+                                    {{ job.pay }} € brut / mois
+                                </span>
+                            {% elseif job.PayChoice == 2 %}
+                                <span class="fw-bold">
+                                    {{ job.pay }} € brut / heure
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
+                        <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
+                        <div class="col-12 mt-2">
+                            {% set positions = {
+                                id: job.id,
+                                userLatitude: app.user.latitude,
+                                userLongitude: app.user.longitude,
+                                businessLatitude: job.latitude,
+                                businessLongitude: job.longitude,
+                            } %}
+                            <ul class="list-inline">
+                                <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+                                    {{ job.business.name }}
+                                </li>
+                            {% for tag in job.tags %}
+                                <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+                            {% endfor %}
+                            {% for activite in job.business.activities %}
+                                <li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                    {% if job.PayChoice == 0 %}
-                        <span class="fw-bold">
-                            {{ job.pay }} € brut / an
-                        </span>
-                    {% elseif job.PayChoice == 1 %}
-                        <span class="fw-bold">
-                            {{ job.pay }} € brut / mois
-                        </span>
-                    {% elseif job.PayChoice == 2 %}
-                        <span class="fw-bold">
-                            {{ job.pay }} € brut / heure
-                        </span>
-                        {% endif %}
+                </a>
+            {% else %}
+                <div class="col-11">
+                    <div class="alert alert-warning text-center" role="alert">
+                        Vous n'avez pas encore déposé d'offre d'emploi
                     </div>
                 </div>
-                <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-                <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
-                <div class="col-12 mt-2">
-                    {% set positions = {
-                        id: job.id,
-                        userLatitude: app.user.latitude,
-                        userLongitude: app.user.longitude,
-                        businessLatitude: job.latitude,
-                        businessLongitude: job.longitude,
-                    } %}
-                    <ul class="list-inline">
-                        <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-                            {{ job.business.name }}
-                        </li>
-                    {% for tag in job.tags %}
-                        <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
-                    {% endfor %}
-                    {% for activite in job.business.activities %}
-                        <li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </a>
+            {% endif %}
         {% else %}
         <div class="col-11">
             <div class="alert alert-warning text-center" role="alert">

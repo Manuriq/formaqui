@@ -122,4 +122,21 @@ class JobController extends AbstractController
 
         return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}', name: 'app_job_apply', methods: ['GET'])]
+    public function apply(Request $request, Job $job, JobRepository $jobRepository): Response
+    {
+        // // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
+        // if (!$this->isGranted('ROLE_BOSS')) {
+        //     $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
+        //     $referer = $request->headers->get('referer');
+        //     return $this->redirect($referer);
+
+        // }
+        // if ($this->isCsrfTokenValid('delete'.$job->getId(), $request->request->get('_token'))) {
+        //     $jobRepository->remove($job, true);
+        // }
+
+        // return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

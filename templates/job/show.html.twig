@@ -1,42 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job{% endblock %}
+{% block title %}Job
+{% endblock %}
 
 {% block body %}
-    <h1>Job</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ job.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ job.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ job.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ job.state ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_job_index') }}">back to list</a>
-
-    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
-
-    {{ include('job/_delete_form.html.twig') }}
+	<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
+		<h1 class="mt-4 text-center mb-4 job-business-name">{{ job.business.name }}</h1>
+        <div class="align-items-center text-center mt-2 mb-2">
+		{% if job.business.owner.imageName is null %}
+			<img src="{{ asset('build/images/icon.svg') }}" width="50px" height="50px">
+		{% else %}
+			<img class="img-thumbnail" width="50px" height="50px" src="{{ asset('/images/avatars/' ~ job.business.owner.imageName ~ '') }}">
+		{% endif %}
+        </div>
+		<h2 class="page-h2 mt-2 text-center job-title-show">{{ job.title }}</h2>
+		{% if job.PayChoice == 0 %}
+			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / an</h3>
+		{% elseif job.PayChoice == 1 %}
+			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / mois</h3>
+		{% elseif job.PayChoice == 2 %}
+			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / heure</h3>
+		{% endif %}
+		<div class="col-12 mt-2 text-center mb-2">
+			{% set positions = {
+                id: job.id,
+                userLatitude: app.user.latitude,
+                userLongitude: app.user.longitude,
+                businessLatitude: job.latitude,
+                businessLongitude: job.longitude,
+            } %}
+			<ul class="list-inline">
+				<li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+					{{ job.business.name }}
+				</li>
+				{% for tag in job.tags %}
+					<li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+				{% endfor %}
+				{% for activite in job.business.activities %}
+					<li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<h4 class="mt-2 opportunity-show">A propos de l'opportunité:</h4>
+		<p class="text-left mb-4">{{ job.description }}</p>
+        <div class="row justify-content-between mx-auto col-12 align-items-center text-center">
+            <div class="d-grid mb-2 d-md-block">
+            {% if job.business.owner.id == app.user.id %}
+                <a href="{{ path('app_job_edit', {'id': job.id}) }}" class="btn btn-primary mb-2">Editer</a>
+                {{ include('job/_delete_form.html.twig') }}
+            {% elseif not is_granted('ROLE_BOSS') %}
+                <a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
+            {% endif %}
+            <a href="{{ path('app_job_index') }}" class="btn btn-primary mb-2">Retour</a>
+            </div>
+        </div>
+	</div>
 {% endblock %}

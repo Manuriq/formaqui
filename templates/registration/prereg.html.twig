@@ -3,16 +3,15 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
+    <h1 class="text-center">Je m'inscris !</h1>
 
-    <h1>Je m'inscris !</h1>
-
-    <div class="d-grid gap-2">
-        <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg mt-4">Je suis un candidat</a>
+    <div class="d-grid mb-2 d-md-block text-center">
+        <a href="{{ path('app_register') }}" class="btn btn-primary mt-4">Je suis un candidat</a>
+        <a href="{{ path('app_register_business') }}" class="btn btn-primary mt-4">Je suis un employeur</a>
     </div>
-    <div class="d-grid gap-2 mb-4">
-        <a href="{{ path('app_register_business') }}" class="btn btn-primary btn-lg mt-4">Je suis un employeur</a>
-    </div>
-    <span class="text-center">J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
+    <span class="text-center mt-2">J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
+</div>
 {% endblock %}
 
 

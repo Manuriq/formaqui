@@ -16,7 +16,12 @@ body {
 }
 
 .btn-primary a{
+    color: #FFFFFF;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
     font-size: 16px;
+    line-height: 28px;
 }
 
 .page-h1{
@@ -66,4 +71,44 @@ a{
     background-color: #EEF0F2;
     border-radius: 4px;
     color: #828282;
+}
+
+.job-business-name{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    color: #08080A;
+}
+
+.job-title-show{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    color: #08080A;
+}
+
+.job-pay-show{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: center;
+    color: #08080A;
+}
+
+.opportunity-show{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.01em;  
 }

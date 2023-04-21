@@ -9,5 +9,7 @@
     {{ form_row(form.pay_choice) }}
     {{ form_row(form.pay) }}
     {{ form_row(form.address) }}
-    <button class="btn btn-primary mb-2">{{ button_label|default('Ajouter') }}</button>
+    <div class="d-grid mb-2 d-md-block">
+        <button class="btn btn-primary mb-2">{{ button_label|default('Ajouter') }}</button>
+    </div>
 {{ form_end(form) }}
