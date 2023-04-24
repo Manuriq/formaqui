@@ -99,9 +99,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $street = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
+    private Collection $applies;
+
     public function __construct()
     {
         $this->businesses = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -435,6 +439,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     public function setStreet(string $street): self
     {
         $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Apply>
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
+
+    public function addApply(Apply $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies->add($apply);
+            $apply->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApply(Apply $apply): self
+    {
+        if ($this->applies->removeElement($apply)) {
+            // set the owning side to null (unless already changed)
+            if ($apply->getUser() === $this) {
+                $apply->setUser(null);
+            }
+        }
 
         return $this;
     }

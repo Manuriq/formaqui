@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\JobRepository;
@@ -75,6 +77,14 @@ class Job
 
     #[ORM\Column(length: 255)]
     private ?string $pay_choice = null;
+
+    #[ORM\OneToMany(mappedBy: 'job', targetEntity: Apply::class)]
+    private Collection $applies;
+
+    public function __construct()
+    {
+        $this->applies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -305,6 +315,36 @@ class Job
     public function setPayChoice(string $pay_choice): self
     {
         $this->pay_choice = $pay_choice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Apply>
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
+
+    public function addApply(Apply $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies->add($apply);
+            $apply->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApply(Apply $apply): self
+    {
+        if ($this->applies->removeElement($apply)) {
+            // set the owning side to null (unless already changed)
+            if ($apply->getJob() === $this) {
+                $apply->setJob(null);
+            }
+        }
 
         return $this;
     }

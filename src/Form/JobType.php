@@ -22,10 +22,8 @@ class JobType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $address = $options['address'];
-        $postcode = $options['postcode'];
-        $city = $options['city'];
+        $autocomplete = $options['autocomplete'];
 
-        $businessAdress = $address .' ' . $city . ' ' . $postcode;
         $builder
             ->add('title', TextType::class, [
                 'mapped' => true,
@@ -113,11 +111,11 @@ class JobType extends AbstractType
                 'mapped' => false,
                 'label' => "Adresse de l'offre",
                 'autocomplete' => true,
-                'empty_data' => $businessAdress,
-                'autocomplete_url' => "../autocomplete/",
+                'empty_data' => $address,
+                'autocomplete_url' => $autocomplete,
                 'tom_select_options' => [
                     'maxItems' => 1,
-                    'placeholder' => $businessAdress
+                    'placeholder' => $address
                 ]
             ])
             // ->add('checkbox_qualifications', ChoiceType::class, [
@@ -171,8 +169,7 @@ class JobType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Job::class,
             'address' => null,
-            'postcode' => null,
-            'city' => null,
+            'autocomplete' => null
         ]);
     }
 }

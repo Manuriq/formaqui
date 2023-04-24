@@ -40,9 +40,16 @@
 					<li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
 				{% endfor %}
 			</ul>
+			<div class="mb-4">
+				{{ job.Address }}
+			</div>
 		</div>
 		<h4 class="mt-2 opportunity-show">A propos de l'opportunité:</h4>
 		<p class="text-left mb-4">{{ job.description }}</p>
+		<p class="text-left mb-4">Date de début: {{ job.startJob|date("d/m/Y") }}</p>
+		{% if "CDD" in job.tags %}
+			<p class="text-left mb-4">Date de fin: {{ job.stopJob|date("d/m/Y") }}</p>
+		{% endif %}
         <div class="row justify-content-between mx-auto col-12 align-items-center text-center">
             <div class="d-grid mb-2 d-md-block">
             {% if job.business.owner.id == app.user.id %}
@@ -54,10 +61,50 @@
                 {% endif %}
                 {{ include('job/_delete_form.html.twig') }}
             {% elseif not is_granted('ROLE_BOSS') %}
-                <a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
+				{% if applied > 0 %}
+					<button class="btn btn-success mb-2 disabled">Vous avez déjà postulé</button>
+				{% else %}
+					<a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
+				{% endif %}
             {% endif %}
             <a href="{{ path('app_job_index') }}" class="btn btn-primary mb-2">Retour</a>
             </div>
         </div>
+		{% if job.business.owner.id == app.user.id %}
+			<h4 class="mt-2 opportunity-show">Liste des candidats:</h4>
+			{% if job.applies|length > 0 %}
+				{% for apply in job.applies %}
+					<div class="card-formaqui mt-4 mb-4">
+						<div class="row justify-content-between align-items-center">
+							<div class="col-auto">
+								{% if apply.user.imageName is null %}
+									<img src="{{ asset('build/images/icon.svg') }}" class="img-thumbnail" width="48px" height="48px">
+								{% else %}
+									<img src="{{ asset('/images/avatars/' ~ apply.user.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
+								{% endif %}
+							</div>
+							<div class="col-auto">
+								<span class="fw-bold">
+									{{ apply.user.firstName }} {{ apply.user.lastName }}
+								</span>
+							</div>
+							<div class="col-auto">
+								<a href="" class="btn btn-primary mb-2">Voir le CV</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="card-formaqui mt-4 mb-4">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<span class="fw-bold">
+								Aucun candidat pour le moment
+							</span>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endif %}
 	</div>
 {% endblock %}
