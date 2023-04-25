@@ -61,6 +61,10 @@ class JobType extends AbstractType
             ])
             ->add('startJob', DateType::class, [
                 'mapped' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/mm/yyyy',
+                'attr' => ['class' => 'js-datepicker'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Choisissez la date de début du contrat',
@@ -70,11 +74,11 @@ class JobType extends AbstractType
             ])
             ->add('stopJob', DateType::class, [
                 'mapped' => true,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Choisissez la date de fin du contrat',
-                    ]),
-                ],
+                'required' => false,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/mm/yyyy',
+                'attr' => ['class' => 'js-datepicker'],
                 'label' => "Date de fin du contrat",
                 'label_attr' => ['id' => 'label_job_stopJob']
             ])

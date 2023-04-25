@@ -1,3 +1,5 @@
+// const $ = require('jquery');
+// global.$ = global.jQuery = $;
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -15,4 +17,11 @@ require('bootstrap');
 import './toasts';
 import './javascript/distance.js';
 import './javascript/job.js';
+
+// $(document).ready(function() {
+//     // you may need to change this code if you are not using Bootstrap Datepicker
+//     $('.js-datepicker').datepicker({
+//         format: 'yyyy-mm-dd'
+//     });
+// });
 

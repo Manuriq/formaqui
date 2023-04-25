@@ -78,6 +78,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('age', BirthdayType::class, [
                 'mapped' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/mm/yyyy',
+                'attr' => ['class' => 'js-datepicker'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez votre date de naissance',
