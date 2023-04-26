@@ -4,7 +4,4 @@ https://symfony.com/doc/current/form/dynamic_form_modification.html
 
 
 
-km à apparaitre que pour le candidat
-corrgier l'erreur de date à l'affichage de l'offre
-
-Ajouter : Qu'est ce que les gens pensent de moi ?
+corriger l'erreur de date à l'affichage de l'offre
