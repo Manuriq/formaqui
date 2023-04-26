@@ -84,7 +84,7 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez le nom de votre entreprise',
                     ]),
                 ],
-                'label' => "Nom de l'entreprise",
+                'label' => "Nom de la structure",
             ])
             ->add('b_address', TextType::class, [
                 'mapped' => false,
@@ -93,7 +93,7 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez l\'adresse de votre entreprise',
                     ]),
                 ],
-                'label' => "Adresse du siege sociale",
+                'label' => "Adresse du siège social",
                 'autocomplete' => true,
                 'autocomplete_url' => "autocomplete/",
                 'tom_select_options' => [
@@ -108,13 +108,13 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez le numéro de téléphone de votre entreprise',
                     ]),
                 ],
-                'label' => "Numéro de téléphone de l'entreprise",
+                'label' => "Numéro de téléphone:",
             ])
             ->add('b_website', TextType::class, [
                 'mapped' => false,
                 'required' => false,
                 'attr' => ['placeholder' => 'Facultatif'],
-                'label' => "Site internet de votre entreprise",
+                'label' => "Site internet:",
             ])
             ->add('b_siret', TextType::class, [
                 'mapped' => false,
@@ -123,7 +123,7 @@ class RegistrationBusinessFormType extends AbstractType
                         'message' => 'Entrez le numéro de SIRET de votre entreprise',
                     ]),
                 ],
-                'label' => "Numéro de SIRET de votre entreprise",
+                'label' => "Numéro de SIRET:",
             ])
             ->add('b_activities', ChoiceType::class, [
                 'mapped' => false,

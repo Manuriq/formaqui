@@ -94,7 +94,7 @@ class JobType extends AbstractType
                     'Brut mensuelle' => "1",
                     'Brut horaire' => "2",
                 ],
-                'label' => "Choisissez comment vous souhaitez payer pour cette offre",
+                'label' => "Salaire exprimé en :",
                 'multiple' => false,
                 'expanded' => true,
             ])
@@ -113,7 +113,7 @@ class JobType extends AbstractType
             ->add('address', TextType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => "Adresse de l'offre",
+                'label' => "Adresse du lieu de travail",
                 'autocomplete' => true,
                 'empty_data' => $address,
                 'autocomplete_url' => $autocomplete,

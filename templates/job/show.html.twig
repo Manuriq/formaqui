@@ -63,7 +63,7 @@
                 {{ include('job/_delete_form.html.twig') }}
             {% elseif not is_granted('ROLE_BOSS') %}
 				{% if applied > 0 %}
-					<button class="btn btn-success mb-2 disabled">Vous avez déjà postulé</button>
+					<button class="btn btn-warning mb-2 disabled">Vous avez déjà postulé</button>
 				{% else %}
 					<a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
 				{% endif %}
@@ -90,7 +90,7 @@
 								</span>
 							</div>
 							<div class="col-auto">
-								<a href="" class="btn btn-primary mb-2">Voir le CV</a>
+								<a href="" class="btn btn-primary mb-2">Voir le profil</a>
 							</div>
 						</div>
 					</div>

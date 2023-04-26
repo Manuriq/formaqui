@@ -114,7 +114,7 @@ class RegistrationFormType extends AbstractType
                 'label' => "Numéro de téléphone",
             ])
             ->add('imageFile', VichFileType::class, [
-                'label' => 'Photo de profile',
+                'label' => 'Photo de profil',
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => false,

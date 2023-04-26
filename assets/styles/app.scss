@@ -1,6 +1,6 @@
 
 
-$primary: #08080A;
+$primary: #2c5774;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -17,11 +17,17 @@ body {
 
 .btn-primary a{
     color: #FFFFFF;
+    
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 28px;
+}
+
+.btn-primary:hover{
+    background-color: #f3b357;
+    border: 1px solid white;
 }
 
 .page-h1{
