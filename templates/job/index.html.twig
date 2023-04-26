@@ -76,9 +76,11 @@
                                     {% if job.state == 0 %}
                                         <li class="list-inline-item badge bg-danger">Annonce désactivée</li>
                                     {% endif %}
-                                    <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-                                        {{ job.business.name }}
-                                    </li>
+                                    {% if not is_granted('ROLE_BOSS') %}
+                                        <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+                                            {{ job.business.name }}
+                                        </li>
+                                    {% if job.state == 0 %}
                                 {% for tag in job.tags %}
                                     <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
                                 {% endfor %}
