@@ -80,7 +80,7 @@
                                         <li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
                                             {{ job.business.name }}
                                         </li>
-                                    {% if job.state == 0 %}
+                                    {% endif %}
                                 {% for tag in job.tags %}
                                     <li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
                                 {% endfor %}

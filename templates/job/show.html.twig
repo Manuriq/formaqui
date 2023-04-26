@@ -30,9 +30,11 @@
                 businessLongitude: job.longitude,
             } %}
 			<ul class="list-inline">
-				<li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-					{{ job.business.name }}
-				</li>
+				{% if not is_granted('ROLE_BOSS') %}
+					<li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
+						{{ job.business.name }}
+					</li>
+				{% endif %}
 				{% for tag in job.tags %}
 					<li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
 				{% endfor %}
