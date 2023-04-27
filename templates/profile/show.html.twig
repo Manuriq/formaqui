@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>Profile</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ profile.id }}</td>
+            </tr>
+            <tr>
+                <th>Wish</th>
+                <td>{{ profile.wish ? profile.wish|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Contract</th>
+                <td>{{ profile.contract ? profile.contract|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Replacements</th>
+                <td>{{ profile.replacements ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Availability</th>
+                <td>{{ profile.availability ? profile.availability|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>StartJob</th>
+                <td>{{ profile.startJob ? profile.startJob|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DiplomeDate</th>
+                <td>{{ profile.diplomeDate }}</td>
+            </tr>
+            <tr>
+                <th>Diplomes</th>
+                <td>{{ profile.diplomes ? profile.diplomes|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Experience</th>
+                <td>{{ profile.experience }}</td>
+            </tr>
+            <tr>
+                <th>Qualities</th>
+                <td>{{ profile.qualities ? profile.qualities|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Likes</th>
+                <td>{{ profile.likes ? profile.likes|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Other</th>
+                <td>{{ profile.other }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ profile.createdAt ? profile.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_profile_index') }}">back to list</a>
+
+    <a href="{{ path('app_profile_edit', {'id': profile.id}) }}">edit</a>
+
+    {{ include('profile/_delete_form.html.twig') }}
+{% endblock %}

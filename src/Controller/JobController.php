@@ -156,6 +156,10 @@ class JobController extends AbstractController
     #[Route('/apply/{id}', name: 'app_job_apply', methods: ['GET'])]
     public function apply(Request $request, Job $job, JobRepository $jobRepository, ApplyRepository $applyRepository): Response
     {
+        if($this->getUser()->getProfile() == null){
+            $this->addFlash("danger", "Vous devez d'abord compléter votre profil avant de pouvoir postuler à cette offre !");
+            return $this->redirectToRoute('app_job_show', ['id' => $job->getId()], Response::HTTP_SEE_OTHER);
+        }
         $apply = new Apply();
         $apply->setJob($job);
         $apply->setUser($this->getUser());

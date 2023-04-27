@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
+		<h1>Editer son profil</h1>
+
+		{{ include('profile/_form.html.twig', {'button_label': 'Modifier'}) }}
+		<div class="d-grid mb-2 d-md-block">
+			<a class="btn btn-primary" href="{{ path('app_home') }}">Retour</a>
+		</div>
+	</div>
+{% endblock %}
