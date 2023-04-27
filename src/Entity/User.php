@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Serializable;
+use App\Entity\Business;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Vich\Uploadable]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
     // Système d'upload d'images
@@ -102,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
     private Collection $applies;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Profile $profile = null;
 
     public function __construct()
@@ -483,16 +484,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
 
     public function setProfile(?Profile $profile): self
     {
-        // unset the owning side of the relation if necessary
-        if ($profile === null && $this->profile !== null) {
-            $this->profile->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($profile !== null && $profile->getUser() !== $this) {
-            $profile->setUser($this);
-        }
-
         $this->profile = $profile;
 
         return $this;

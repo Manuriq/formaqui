@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Profile;
 use App\Entity\Business;
 use App\Security\Authenticator;
 use App\Security\EmailVerifier;

@@ -2,17 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\ProfileRepository;
+use App\Repository\ProfilesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProfileRepository::class)]
-class Profile
+#[ORM\Entity(repositoryClass: ProfilesRepository::class)]
+class Profiles
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?user $user = null;
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $wish = [];
@@ -56,6 +59,18 @@ class Profile
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getWish(): array
@@ -118,7 +133,7 @@ class Profile
         return $this;
     }
 
-    public function getDiplomeDate(): ?string
+    public function getDiplomeDate(): ?\DateTimeInterface
     {
         return $this->diplomeDate;
     }
