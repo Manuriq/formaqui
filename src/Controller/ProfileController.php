@@ -18,16 +18,18 @@ class ProfileController extends AbstractController
     #[Route('/', name: 'app_profile_index', methods: ['GET'])]
     public function index(ProfileRepository $profileRepository): Response
     {
-        if($this->getUser()->getProfile() == null){
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+        if($user->getProfile() == null){
             return $this->redirectToRoute('app_profile_new');
         }
         else{
-            return $this->redirectToRoute('app_profile_edit', ['id' => $this->getUser()->getProfile()->getId()]);
+            return $this->redirectToRoute('app_profile_edit', ['id' => $user->getProfile()->getId()]);
         }
     }
 
     #[Route('/new', name: 'app_profile_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, ProfileRepository $profileRepository): Response
     {
         $profile = new Profile();
         $form = $this->createForm(ProfileType::class, $profile);
@@ -36,11 +38,11 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $profile->setCreatedAt(new DateTimeImmutable('now'));
             $profile->setUpdatedAt(new \DateTimeImmutable('now'));
+
+            $profile->setUser($this->getUser());
             $profileRepository->save($profile, true);
 
-            $this->getUser()->setProfile($profile);
-            $entityManager->persist($this->getUser());
-            $entityManager->flush();
+            $this->addFlash('success', 'Votre profil a bien été créé !');
 
             return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -66,7 +68,10 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profile->setUpdatedAt(new \DateTimeImmutable('now'));
             $profileRepository->save($profile, true);
+
+            $this->addFlash('success', 'Votre profil a bien été modifié !');
 
             return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,15 +80,5 @@ class ProfileController extends AbstractController
             'profile' => $profile,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{id}', name: 'app_profile_delete', methods: ['POST'])]
-    public function delete(Request $request, Profile $profile, ProfileRepository $profileRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$profile->getId(), $request->request->get('_token'))) {
-            $profileRepository->remove($profile, true);
-        }
-
-        return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
     }
 }
