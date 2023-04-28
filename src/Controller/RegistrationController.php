@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/prereg', name: 'app_prereg')]
-    public function autocomplete(Request $request)
+    public function autocomplete()
     {
         // on check si l'utilisateur est déjà connecté
         if ($this->getUser()) {

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Business;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -54,10 +55,33 @@ class AppFixtures extends Fixture
                 "nunu33660"
             )
         );
-
         $user->setRoles($role);
         $manager->persist($user);
-
         $manager->flush();
+
+        
+        if($role == ['ROLE_USER', 'ROLE_BOSS']){
+            $business = new Business();
+
+            $business->setLatitude($results->features[0]->geometry->coordinates[0]);
+            $business->setLongitude($results->features[0]->geometry->coordinates[1]);
+            $business->setCity($results->features[0]->properties->city);
+            $business->setPostcode($results->features[0]->properties->postcode);
+            $business->setAddress($results->features[0]->properties->label);
+            $business->setStreet($results->features[0]->properties->name);
+
+            $business->setOwner($user);
+            $business->setName("Aqui'Form");
+            $business->setPhone("0649384245");
+            $business->setSiret("FR54784844184");
+            $business->setActivities(["Crèche"]);
+            $business->setDescription("Aucune description pour le moment.");
+            $business->setWebsite("http://google.fr");
+            $business->setCreatedAt(new \DateTimeImmutable('now'));
+            $business->setUpdatedAt(new \DateTimeImmutable('now'));
+
+            $manager->persist($business);
+            $manager->flush();   
+        }
     }
 }

@@ -28,6 +28,9 @@ class JobController extends AbstractController
     #[Route('/new', name: 'app_job_new', methods: ['GET', 'POST'])]
     public function new(Request $request, JobRepository $jobRepository, HttpClientInterface $httpClient): Response
     {
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+
         // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
         if (!$this->isGranted('ROLE_BOSS')) {
             $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
@@ -39,7 +42,7 @@ class JobController extends AbstractController
         $job = new Job();
     
         $form = $this->createForm(JobType::class, $job, array(
-                'address' => $this->getUser()->getBusinesses()->first()->getAddress(),
+                'address' => $user->getBusinesses()->first()->getAddress(),
                 'autocomplete' => $this->generateUrl('autocomplete')
             )
         );
@@ -62,7 +65,7 @@ class JobController extends AbstractController
             $job->setStreet($results->features[0]->properties->name);
 
             $job->setTags($form->get('tags')->getData());
-            $job->setBusiness($this->getUser()->getBusinesses()->first());
+            $job->setBusiness($user->getBusinesses()->first());
             $jobRepository->save($job, true);
 
             return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
@@ -77,8 +80,11 @@ class JobController extends AbstractController
     #[Route('/{id}', name: 'app_job_show', methods: ['GET'])]
     public function show(Job $job): Response
     {
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+
         $applied = 0;
-        foreach ($this->getUser()->getApplies() as $key => $apply) {
+        foreach ($user->getApplies() as $key => $apply) {
             if($apply->getJob() == $job){
                 $applied = 1;
                 break;
@@ -156,9 +162,12 @@ class JobController extends AbstractController
     #[Route('/apply/{id}', name: 'app_job_apply', methods: ['GET'])]
     public function apply(Request $request, Job $job, JobRepository $jobRepository, ApplyRepository $applyRepository): Response
     {
-        if($this->getUser()->getProfile() == null){
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+
+        if($user->getProfile() == null){
             $this->addFlash("danger", "Vous devez d'abord compléter votre profil avant de pouvoir postuler à cette offre !");
-            return $this->redirectToRoute('app_job_show', ['id' => $job->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profile_new', [], Response::HTTP_SEE_OTHER);
         }
         $apply = new Apply();
         $apply->setJob($job);

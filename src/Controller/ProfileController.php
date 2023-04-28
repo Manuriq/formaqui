@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Job;
 
 #[Route('/profile')]
 class ProfileController extends AbstractController
@@ -54,10 +55,14 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_profile_show', methods: ['GET'])]
-    public function show(Profile $profile): Response
+    public function show(Profile $profile, Request $request): Response
     {
+        // Création d'un lien de retour
+        $referer = $request->headers->get('referer');
+
         return $this->render('profile/show.html.twig', [
             'profile' => $profile,
+            'backLink' => $referer,
         ]);
     }
 
