@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue!
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-around mb-4 align-items-center mt-4">
+		<div class="alert alert-danger d-flex align-items-center" role="alert">
+			<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+			<div>
+				Votre compte n'a pas été activé par un administrateur, veuillez patienter.
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

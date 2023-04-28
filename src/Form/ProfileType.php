@@ -4,19 +4,77 @@ namespace App\Form;
 
 use App\Entity\Profile;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        $autocomplete = $options['autocomplete'];
+
         $builder
+            ->add('firstName', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre prénom',
+                    ]),
+                ],
+                'label' => "Prénom",
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre nom',
+                    ]),
+                ],
+                'label' => "Nom",
+            ])
+            ->add('age', BirthdayType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/mm/yyyy',
+                'attr' => ['class' => 'js-datepicker'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre date de naissance',
+                    ]),
+                ],
+                'label' => "Date de naissance",
+            ])
+            ->add('address', TextType::class, [
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre adresse',
+                    ]),
+                ],
+                'label' => "Adresse",
+                'autocomplete' => true,
+                'autocomplete_url' => $autocomplete,
+                'tom_select_options' => [
+                    'maxItems' => 1,
+                    'placeholder' => "Rechercher une adresse"
+                ]
+            ])
+            ->add('phone', TelType::class, [
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre numéro de téléphone',
+                    ]),
+                ],
+                'label' => "Numéro de téléphone",
+            ])
             ->add('wish', ChoiceType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -190,13 +248,25 @@ class ProfileType extends AbstractType
                 ],
                 'label' => "Complétez votre profil - Décrivez-vous :  Qu'est-ce qui fait que je suis unique ? Qu'est-ce que mon entourage dit de moi ?",
             ])
-        ;
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Photo de profil',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'download_label' => false,
+                'delete_label' => false,
+                'asset_helper' => true,
+                'attr' => [
+                    'class' => 'form-control-file',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Profile::class,
+            'autocomplete' => null
         ]);
     }
 }

@@ -1,33 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription - Candidat{% endblock %}
-
-{% block body %}
-<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <h1>Inscription - Candidat</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.age) }}
-        {{ form_row(registrationForm.address) }}
-        {{ form_row(registrationForm.phone) }}
-        {{ form_row(registrationForm.imageFile) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-        <div class="d-grid gap-2 mb-2">
-            <button type="submit" class="btn btn-primary btn-lg mt-2">Inscription</button>
-        </div>
-        <span>J'ai déjà un compte ! <a href="{{ path('app_login') }}">Se connecter</a></span>
-    {{ form_end(registrationForm) }}
-</div>
+{% block title %}Inscription - Candidat
 {% endblock %}
 
+{% block body %}
+	<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
 
+		<h1>Inscription</h1>
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<div class="d-grid gap-2 mb-2">
+			<button type="submit" class="btn btn-primary btn-lg mt-2">Inscription</button>
+		</div>
+		<span>J'ai déjà un compte !
+			<a href="{{ path('app_login') }}">Se connecter</a>
+		</span>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

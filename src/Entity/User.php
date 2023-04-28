@@ -9,30 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Ignore;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[Vich\Uploadable]
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
-    // Système d'upload d'images
-    #[Vich\UploadableField(mapping: 'avatars', fileNameProperty: 'imageName', size: 'imageSize')]
-    #[Ignore]
-    private ?File $imageFile = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?string $imageName = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $imageSize = null;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -44,67 +29,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isActivated = false;
+
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $address = null;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
+    private Collection $applies;
 
-    #[ORM\Column]
-    private ?bool $student = null;
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Profile $profile = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstName = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
-
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $contrat = [];
-
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $age = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $phone = null;
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Business::class)]
+    private Collection $businesses;
 
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    #[Gedmo\Timestampable]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Business::class)]
-    private Collection $businesses;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $postcode = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $latitude = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $longitude = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $street = null;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
-    private Collection $applies;
-
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Profile $profile = null;
 
     public function __construct()
     {
@@ -158,6 +110,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
         return $this;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isActivated(): bool
+    {
+        return $this->isActivated;
+    }
+
+    public function setIsActivated(bool $isActivated): self
+    {
+        $this->isActivated = $isActivated;
+
+        return $this;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -180,102 +156,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function isStudent(): ?bool
-    {
-        return $this->student;
-    }
-
-    public function setStudent(bool $student): self
-    {
-        $this->student = $student;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getContrat(): array
-    {
-        return $this->contrat;
-    }
-
-    public function setContrat(?array $contrat): self
-    {
-        $this->contrat = $contrat;
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    public function getAge(): ?\DateTimeInterface
-    {
-        return $this->age;
-    }
-
-    public function setAge(\DateTimeInterface $age): self
-    {
-        $this->age = $age;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -314,7 +194,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     {
         if (!$this->businesses->contains($business)) {
             $this->businesses->add($business);
-            $business->setOwnerId($this);
+            $business->setOwner($this);
         }
 
         return $this;
@@ -324,48 +204,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     {
         if ($this->businesses->removeElement($business)) {
             // set the owning side to null (unless already changed)
-            if ($business->getOwnerId() === $this) {
-                $business->setOwnerId(null);
+            if ($business->getOwner() === $this) {
+                $business->setOwner(null);
             }
         }
 
         return $this;
-    }
-
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
     }
 
     public function serialize() {
@@ -385,66 +229,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
             $this->email,
             $this->password,
         ) = unserialize($serialized);
-    }
-
-    public function getPostcode(): ?int
-    {
-        return $this->postcode;
-    }
-
-    public function setPostcode(int $postcode): self
-    {
-        $this->postcode = $postcode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?string
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(string $latitude): self
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    public function getLongitude(): ?string
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(string $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function getStreet(): ?string
-    {
-        return $this->street;
-    }
-
-    public function setStreet(string $street): self
-    {
-        $this->street = $street;
-
-        return $this;
     }
 
     /**

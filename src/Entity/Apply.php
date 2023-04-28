@@ -20,7 +20,7 @@ class Apply
 
     #[ORM\ManyToOne(inversedBy: 'applies')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?job $job = null;
+    private ?Job $job = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $response = null;
@@ -48,12 +48,12 @@ class Apply
         return $this;
     }
 
-    public function getJob(): ?job
+    public function getJob(): ?Job
     {
         return $this->job;
     }
 
-    public function setJob(?job $job): self
+    public function setJob(?Job $job): self
     {
         $this->job = $job;
 
