@@ -103,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
     private Collection $applies;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Profile $profile = null;
 
     public function __construct()
@@ -482,8 +482,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
         return $this->profile;
     }
 
-    public function setProfile(?Profile $profile): self
+    public function setProfile(Profile $profile): self
     {
+        // set the owning side of the relation if necessary
+        if ($profile->getUser() !== $this) {
+            $profile->setUser($this);
+        }
+
         $this->profile = $profile;
 
         return $this;
