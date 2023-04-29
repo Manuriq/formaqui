@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/Manuriq/dreamv/blob/master/public/assets/logo.png" width="400"></p>
+<p align="center"><img src="https://github.com/Manuriq/formaqui/blob/master/public/build/images/logo.svg" width="400"></p>
 
 
 ## About Project
