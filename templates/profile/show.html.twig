@@ -12,68 +12,97 @@
 			<img class="img-thumbnail" width="50px" height="50px" src="{{ asset('/images/avatars/' ~ profile.imageName ~ '') }}">
 		{% endif %}
         </div>
-		<h2 class="page-h2 mt-2 text-center job-title-show">{{ job.title }}</h2>
-		{% if job.PayChoice == 0 %}
-			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / an</h3>
-		{% elseif job.PayChoice == 1 %}
-			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / mois</h3>
-		{% elseif job.PayChoice == 2 %}
-			<h3 class="page-h3 text-center job-pay-show">{{ job.pay }}€ brut / heure</h3>
-		{% endif %}
-		<div class="col-12 mt-2 text-center mb-2">
-			{% set positions = {
-                id: job.id,
-                userLatitude: app.user.latitude,
-                userLongitude: app.user.longitude,
-                businessLatitude: job.latitude,
-                businessLongitude: job.longitude,
-            } %}
-			<ul class="list-inline">
-				{% if not is_granted('ROLE_BOSS') %}
-					<li class="list-inline-item badge badge-aquiform" id="{{ job.id }}" data-entry-info='{{ positions|json_encode|raw }}'>
-						{{ job.business.name }}
-					</li>
-				{% endif %}
-				{% for tag in job.tags %}
-					<li class="list-inline-item badge badge-aquiform">{{ tag }}</li>
+		<div class="opportunity-block">
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">cake</span>
+				<div class="opportunity-desc">
+					<p>{{ date('now').diff((date(profile.age))).format('%y ans') }}</p>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">phone</span>
+				<div class="opportunity-desc">
+					<p>{{ profile.phone }}</p>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">email</span>
+				<div class="opportunity-desc">	
+					<p>{{ profile.user.email }}</p>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">description</span>
+				<div class="opportunity-desc">
+				{% for wish in profile.wish %}
+						<li class="list-inline-item badge badge-aquiform">{{ wish }}</li>
 				{% endfor %}
-				{% for activite in job.business.activities %}
-					<li class="list-inline-item badge badge-aquiform">{{ activite }}</li>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">search</span>
+				<div class="opportunity-desc">
+				{% for contract in profile.contract %}
+						<li class="list-inline-item badge badge-aquiform">{{ contract }}</li>
 				{% endfor %}
-			</ul>
-			<div class="mb-4">
-				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-				{{ job.Address }}
-			</div>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">published_with_changes</span>
+				<div class="opportunity-desc">
+					{% if profile.replacements == 1 %}
+						<li class="list-inline-item badge badge-aquiform">J'accepte les remplacements</li>
+					{% else %}
+						<li class="list-inline-item badge badge-aquiform">Je refuse les remplacements</li>
+					{% endif %}
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">event_available</span>
+				<div class="opportunity-desc">
+				{% for availability in profile.availability %}
+					<li class="list-inline-item badge badge-aquiform">{{ availability }}</li>
+				{% endfor %}
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">schedule</span>
+				<div class="opportunity-desc">
+					<p>Disponible à partir du <li class="list-inline-item badge badge-aquiform">{{ profile.startJob|date("d/m/Y") }}</li></p>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">school</span>
+				<div class="opportunity-desc">
+					<p>Année d'obtention de mon CAP AEPE <li class="list-inline-item badge badge-aquiform">{{ profile.diplomeDate }}</li></p>
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">science</span>
+				<div class="opportunity-desc">
+					{% if profile.replacements == 0 %}
+						<li class="list-inline-item badge badge-aquiform">Experience moins de 3 mois</li>
+					{% elseif profile.replacements == 1 %}
+						<li class="list-inline-item badge badge-aquiform">Experience 1 à 2 ans</li>
+					{% elseif profile.replacements == 2 %}
+						<li class="list-inline-item badge badge-aquiform">Experience plus de 3 ans</li>
+					{% endif %}
+				<div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">share</span>
+				<div class="opportunity-desc">
+				{% for quality in profile.qualities %}
+					<li class="list-inline-item badge badge-aquiform">{{ quality }}</li>
+				{% endfor %}
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">favorite</span>
+				<div class="opportunity-desc">
+				{% for like in profile.likes %}
+					<li class="list-inline-item badge badge-aquiform">{{ like }}</li>
+				{% endfor %}
+				</div>
+			</h4>
+			<h4 class="opportunity-show"><span class="material-symbols-outlined">description</span>
+				<div class="opportunity-desc">
+					<p>Description :<br> <textarea class="form-control disabled" rows="5">{{ profile.other }}</textarea></p>
+				</div>
+			</h4>
 		</div>
-		<h4 class="mt-2 opportunity-show">A propos de l'opportunité:</h4>
-		<p class="text-left mb-4">{{ job.description }}</p>
-		<p class="text-left fw-bold">Date de début du contrat: {{ job.startJob|date("d/m/Y") }}</p>
-		{% if "CDD" in job.tags %}
-			<p class="text-left mb-4 fw-bold">Date de fin du contrat: {{ job.stopJob|date("d/m/Y") }}</p>
-		{% endif %}
         <div class="row justify-content-between mx-auto col-12 align-items-center text-center">
             <div class="d-grid mb-2 d-md-block">
-            {% if job.business.owner.id == app.user.id %}
-                <a href="{{ path('app_job_edit', {'id': job.id}) }}" class="btn btn-primary mb-2">Editer</a>
-                {% if job.state == 0 %}
-                    <a href="{{ path('app_job_toggle', {'id': job.id, 'toggle': 1}) }}" class="btn btn-primary mb-2">Activer l'annonce</a>
-                {% else %}
-                    <a href="{{ path('app_job_toggle', {'id': job.id, 'toggle': 0}) }}" class="btn btn-primary mb-2">Désactiver l'annonce</a>
-                {% endif %}
-                {{ include('job/_delete_form.html.twig') }}
-            {% elseif not is_granted('ROLE_BOSS') %}
-				{% if applied > 0 %}
-					<button class="btn btn-warning mb-2 disabled">Vous avez déjà postulé</button>
-				{% else %}
-					<a href="{{ path('app_job_apply', {'id': job.id}) }}" class="btn btn-primary mb-2">Postuler</a>
-				{% endif %}
-            {% endif %}
-            <a href="{{ path('app_job_index') }}" class="btn btn-primary mb-2">Retour</a>
+            	<a class="btn btn-primary" href="{{ backLink }}">Retour</a>
             </div>
         </div>
 	</div>
-
-    <a class="btn btn-primary" href="{{ backLink }}">Retour</a>
-
 {% endblock %}

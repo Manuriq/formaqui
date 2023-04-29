@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Business index{% endblock %}
+
+{% block body %}
+    <h1>Business index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Siret</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>Activities</th>
+                <th>Website</th>
+                <th>Street</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for business in businesses %}
+            <tr>
+                <td>{{ business.id }}</td>
+                <td>{{ business.firstName }}</td>
+                <td>{{ business.lastName }}</td>
+                <td>{{ business.name }}</td>
+                <td>{{ business.address }}</td>
+                <td>{{ business.phone }}</td>
+                <td>{{ business.siret }}</td>
+                <td>{{ business.description }}</td>
+                <td>{{ business.createdAt ? business.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ business.updatedAt ? business.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ business.activities ? business.activities|join(', ') : '' }}</td>
+                <td>{{ business.website }}</td>
+                <td>{{ business.street }}</td>
+                <td>
+                    <a href="{{ path('app_business_show', {'id': business.id}) }}">show</a>
+                    <a href="{{ path('app_business_edit', {'id': business.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_business_new') }}">Create new</a>
+{% endblock %}

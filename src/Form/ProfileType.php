@@ -23,22 +23,6 @@ class ProfileType extends AbstractType
         $autocomplete = $options['autocomplete'];
 
         $builder
-            ->add('firstName', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez votre prénom',
-                    ]),
-                ],
-                'label' => "Prénom",
-            ])
-            ->add('lastName', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez votre nom',
-                    ]),
-                ],
-                'label' => "Nom",
-            ])
             ->add('age', BirthdayType::class, [
                 'widget' => 'single_text',
                 'html5' => false,

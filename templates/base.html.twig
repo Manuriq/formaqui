@@ -11,6 +11,7 @@
             {{ encore_entry_link_tags('app') }}
             {{ encore_entry_link_tags('datepicker') }}
         {% endblock %}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
@@ -29,7 +30,7 @@
                         <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
                     </li>
                     {% if app.user %}
-                    {% if not is_granted('ROLE_BOSS') %}
+                    {% if not is_granted('ROLE_BUSINESS') %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_profile_index') }}">Mon Profil</a>
                         </li>

@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -44,6 +45,22 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => "Mot de passe",
+            ])
+            ->add('firstName', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre prénom',
+                    ]),
+                ],
+                'label' => "Prénom",
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre nom',
+                    ]),
+                ],
+                'label' => "Nom",
             ])
             ->add('role', ChoiceType::class, [
                 'mapped' => false,

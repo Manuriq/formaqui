@@ -31,8 +31,8 @@ class JobController extends AbstractController
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
 
-        // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
-        if (!$this->isGranted('ROLE_BOSS')) {
+        // Ici on regarde si l'utilisateur a bien le role ROLE_BUSINESS
+        if (!$this->isGranted('ROLE_BUSINESS')) {
             $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
             $referer = $request->headers->get('referer');
             return $this->redirect($referer);
@@ -99,8 +99,8 @@ class JobController extends AbstractController
     #[Route('/{id}/edit', name: 'app_job_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Job $job, JobRepository $jobRepository, HttpClientInterface $httpClient): Response
     {
-        // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
-        if (!$this->isGranted('ROLE_BOSS')) {
+        // Ici on regarde si l'utilisateur a bien le role ROLE_BUSINESS
+        if (!$this->isGranted('ROLE_BUSINESS')) {
             $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
             $referer = $request->headers->get('referer');
             return $this->redirect($referer);
@@ -145,8 +145,8 @@ class JobController extends AbstractController
     #[Route('/{id}', name: 'app_job_delete', methods: ['POST'])]
     public function delete(Request $request, Job $job, JobRepository $jobRepository): Response
     {
-        // Ici on regarde si l'utilisateur a bien le role ROLE_BOSS
-        if (!$this->isGranted('ROLE_BOSS')) {
+        // Ici on regarde si l'utilisateur a bien le role ROLE_BUSINESS
+        if (!$this->isGranted('ROLE_BUSINESS')) {
             $this->addFlash("danger", "Vous n'êtes pas autorisé à accéder à cette page.");
             $referer = $request->headers->get('referer');
             return $this->redirect($referer);

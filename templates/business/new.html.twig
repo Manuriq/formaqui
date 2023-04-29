@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Renseingement de la structure
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-around col-11  col-md-6 mb-4 align-items-center mt-4 mx-auto">
+		<h1>Renseingement de la structure</h1>
+
+		{{ include('business/_form.html.twig') }}
+		<div class="d-grid mb-2 d-md-block">
+			<a class="btn btn-primary" href="{{ path('app_home') }}">Retour</a>
+		</div>
+	</div>
+{% endblock %}
+

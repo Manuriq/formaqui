@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Business{% endblock %}
+
+{% block body %}
+    <h1>Business</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ business.id }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ business.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ business.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ business.name }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ business.address }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ business.phone }}</td>
+            </tr>
+            <tr>
+                <th>Siret</th>
+                <td>{{ business.siret }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ business.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ business.createdAt ? business.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ business.updatedAt ? business.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Activities</th>
+                <td>{{ business.activities ? business.activities|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>{{ business.website }}</td>
+            </tr>
+            <tr>
+                <th>Street</th>
+                <td>{{ business.street }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_business_index') }}">back to list</a>
+
+    <a href="{{ path('app_business_edit', {'id': business.id}) }}">edit</a>
+
+    {{ include('business/_delete_form.html.twig') }}
+{% endblock %}

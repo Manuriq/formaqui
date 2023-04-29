@@ -44,20 +44,17 @@ class ProfileController extends AbstractController
             /** @var \App\Entity\User|null $user */
             $user = $this->getUser();
 
-            $profile->setCreatedAt(new DateTimeImmutable('now'));
-            $profile->setUpdatedAt(new \DateTimeImmutable('now'));
-
-            $profile->setUser($user);
-            $profileRepository->save($profile, true);
-
             $roles = $user->getRoles();
             array_push($roles, "ROLE_ACTIVE");
             $user->setRoles($roles);
             $userRepository->save($user, true);
 
+            $profile->setUser($user);
+            $profileRepository->save($profile, true);
+
             $this->addFlash('success', 'Votre profil a bien été créé !');
 
-            return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('profile/new.html.twig', [
@@ -81,7 +78,9 @@ class ProfileController extends AbstractController
     #[Route('/{id}/edit', name: 'app_profile_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Profile $profile, ProfileRepository $profileRepository): Response
     {
-        $form = $this->createForm(ProfileType::class, $profile);
+        $form = $this->createForm(ProfileType::class, $profile, array(
+            'autocomplete' => $this->generateUrl('autocomplete')
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -107,7 +107,7 @@ class JobType extends AbstractType
                 ],
                 'label' => "Salaire de votre offre",
                 'attr' => [
-                    'placeholder' => 'Ex: 20000€/an ou 1200€/mois 12€/h', 
+                    'placeholder' => 'Ex: 20000', 
                 ]
             ])
             ->add('address', TextType::class, [
@@ -117,9 +117,10 @@ class JobType extends AbstractType
                 'autocomplete' => true,
                 'empty_data' => $address,
                 'autocomplete_url' => $autocomplete,
+                'data' => $address,
                 'tom_select_options' => [
                     'maxItems' => 1,
-                    'placeholder' => $address
+                    'placeholder' => "Chercher une adresse"
                 ]
             ])
             // ->add('checkbox_qualifications', ChoiceType::class, [

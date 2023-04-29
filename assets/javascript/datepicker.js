@@ -4,6 +4,10 @@ require('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')
 $(document).ready(function() {
     $('.js-datepicker').datepicker({
         format: 'dd/mm/yyyy',
-        language: 'fr'
+        language: 'fr',
+        immediateUpdates: true,
+        todayBtn: true,
+        todayHighlight: true,
+        autoclose: true,
     });
 });

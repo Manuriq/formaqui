@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Serializable;
+use App\Entity\Apply;
+use App\Entity\Profile;
 use App\Entity\Business;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,6 +30,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -106,6 +114,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }

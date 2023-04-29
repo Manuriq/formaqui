@@ -75,9 +75,9 @@ a{
 }
 
 .badge-aquiform{
-    background-color: #EEF0F2;
-    border-radius: 4px;
-    color: #828282;
+    background-color: #2c5774;
+    border-radius: 3px;
+    color: #ffffff;
 }
 
 .job-business-name{
@@ -111,11 +111,42 @@ a{
     color: #08080A;
 }
 
-.opportunity-show{
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 18px;
-    letter-spacing: -0.01em;  
+.opportunity-block{
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    flex-direction: column;
+    background-color: #8ebad166;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 20px;
+
+    .opportunity-show{
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: -0.01em;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .opportunity-desc{
+            display: inline-block;
+            width: 100%;
+            margin-left: 10px;
+            p {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }
