@@ -35,10 +35,7 @@ class BusinessController extends AbstractController
 
             /** @var \App\Entity\User|null $user */
             $user = $this->getUser();
-
-            $roles = $user->getRoles();
-            array_push($roles, "ROLE_ACTIVE");
-            $user->setRoles($roles);
+            $user->setIsActivated(true);
             $userRepository->save($user, true);
 
             $business->setOwner($user);
@@ -50,14 +47,16 @@ class BusinessController extends AbstractController
         return $this->renderForm('business/new.html.twig', [
             'business' => $business,
             'form' => $form,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 
     #[Route('/{id}', name: 'app_business_show', methods: ['GET'])]
-    public function show(Business $business): Response
+    public function show(Business $business, Request $request): Response
     {
         return $this->render('business/show.html.twig', [
             'business' => $business,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 
@@ -78,6 +77,7 @@ class BusinessController extends AbstractController
         return $this->renderForm('business/edit.html.twig', [
             'business' => $business,
             'form' => $form,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 

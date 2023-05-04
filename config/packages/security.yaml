@@ -37,10 +37,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/home, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/job, roles: ROLE_USER }
+        - { path: ^/business, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_STUDENT:     ROLE_USER

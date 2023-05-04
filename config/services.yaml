@@ -24,10 +24,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request } 
                    
-    App\AutoComplete\DataGouvAutoComplete:
-        arguments:
-            - '@http_client'
-            - 'https://api-adresse.data.gouv.fr'
+    App\AutoComplete\JobAutoComplete:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

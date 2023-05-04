@@ -20,9 +20,9 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/not-activated', name: 'app_not_activated')]
-    public function not_activated(): Response
+    #[Route('/conditions', name: 'app_conditions')]
+    public function conditions(): Response
     {
-        return $this->render('home/not-activated.html.twig');
+        return $this->render('home/conditions.html.twig');
     }
 }

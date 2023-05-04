@@ -18,8 +18,15 @@
             Trouvez votre emploi de rêve</h1></h1>
         {% endif %}
         <div class="col-9">
-            <form action="">
-                <input type="text" class="form-control form-control-lg input-formaqui" placeholder="Recherche">
+            <form action="{{ path('app_job_index') }}">
+                <input
+                    type="search"
+                    name="q"
+                    class="form-control"
+                    placeholder="Search..."
+                    aria-label="Search"
+                    class="form-control form-control-lg input-formaqui" placeholder="Recherche"
+                >
             </form>
         </div>
         <div class="col-auto">

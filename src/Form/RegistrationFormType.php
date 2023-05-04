@@ -80,7 +80,8 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Vous devez accepter les conditions d\'utilisation.',
                     ]),
                 ],
-                'label' => "J'accepte les conditions d'utilisation",
+                'label' => 'J\'accepte les <a href="/conditions">conditions d\'utilisation</a>',
+                'label_html' => true,
             ])
         ;
     }

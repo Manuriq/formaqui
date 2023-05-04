@@ -93,7 +93,8 @@ class BusinessType extends AbstractType
                     'rows' => 5,
                 ],
                 'label' => "Description de votre entreprise",
-            ], VichFileType::class, [
+            ])
+            ->add('imageFile', VichFileType::class, [
                 'label' => 'Logo de votre entreprise (facultatif)',
                 'required' => false,
                 'allow_delete' => true,
@@ -105,7 +106,8 @@ class BusinessType extends AbstractType
                     'class' => 'form-control-file',
                     'placeholder' => 'Choisissez une image',
                 ],
-            ]);
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

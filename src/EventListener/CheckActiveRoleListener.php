@@ -33,8 +33,9 @@ class CheckActiveRoleListener
         }
 
         // Vérifie si l'utilisateur est authentifié et possède le rôle ROLE_ACTIVE
+        /** @var \App\Entity\User|null $user */
         $user = $this->security->getUser();
-        if ($user && in_array('ROLE_ACTIVE', $user->getRoles())) {
+        if ($user && $user->isActivated()) {
             // Si l'utilisateur a le rôle ROLE_ACTIVE, on ne fait rien
             return;
         }

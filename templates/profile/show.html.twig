@@ -7,9 +7,9 @@
 		<h1 class="mt-4 text-center mb-4 job-business-name">{{ profile.user.firstName }} {{ profile.user.lastName }}</h1>
         <div class="align-items-center text-center mt-2 mb-2">
 		{% if profile.imageName is null %}
-			<img src="{{ asset('build/images/icon.svg') }}" width="50px" height="50px">
+			<img src="{{ asset('build/images/icon.svg') }}" width="200px" height="200px">
 		{% else %}
-			<img class="img-thumbnail" width="50px" height="50px" src="{{ asset('/images/avatars/' ~ profile.imageName ~ '') }}">
+			<img class="img-thumbnail" width="200px" height="200px" src="{{ asset('/images/avatars/' ~ profile.imageName ~ '') }}">
 		{% endif %}
         </div>
 		<div class="opportunity-block">
@@ -95,7 +95,7 @@
 			</h4>
 			<h4 class="opportunity-show"><span class="material-symbols-outlined">description</span>
 				<div class="opportunity-desc">
-					<p>Description :<br> <textarea class="form-control disabled" rows="5">{{ profile.other }}</textarea></p>
+					<p>Description :<br> <textarea class="form-control" rows="5" disabled>{{ profile.other }}</textarea></p>
 				</div>
 			</h4>
 		</div>

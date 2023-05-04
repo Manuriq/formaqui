@@ -43,10 +43,7 @@ class ProfileController extends AbstractController
 
             /** @var \App\Entity\User|null $user */
             $user = $this->getUser();
-
-            $roles = $user->getRoles();
-            array_push($roles, "ROLE_ACTIVE");
-            $user->setRoles($roles);
+            $user->setIsActivated(true);
             $userRepository->save($user, true);
 
             $profile->setUser($user);
@@ -60,18 +57,17 @@ class ProfileController extends AbstractController
         return $this->renderForm('profile/new.html.twig', [
             'profile' => $profile,
             'form' => $form,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 
     #[Route('/{id}', name: 'app_profile_show', methods: ['GET'])]
     public function show(Profile $profile, Request $request): Response
     {
-        // Création d'un lien de retour
-        $referer = $request->headers->get('referer');
 
         return $this->render('profile/show.html.twig', [
             'profile' => $profile,
-            'backLink' => $referer,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 
@@ -95,6 +91,7 @@ class ProfileController extends AbstractController
         return $this->renderForm('profile/edit.html.twig', [
             'profile' => $profile,
             'form' => $form,
+            'backLink' => $request->headers->get('referer'),
         ]);
     }
 }
