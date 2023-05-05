@@ -24,6 +24,7 @@ class CheckActiveRoleListener
 
     public function onKernelRequest(RequestEvent $event)
     {
+        
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
         
@@ -31,23 +32,27 @@ class CheckActiveRoleListener
         if ($route == "autocomplete") {
             return;
         }
-
-        // Vérifie si l'utilisateur est authentifié et possède le rôle ROLE_ACTIVE
+        
+        // Vérifie si l'utilisateur est authentifié et possède isActivated()
         /** @var \App\Entity\User|null $user */
         $user = $this->security->getUser();
         if ($user && $user->isActivated()) {
-            // Si l'utilisateur a le rôle ROLE_ACTIVE, on ne fait rien
+            // Si l'utilisateur a isActivated(), on ne fait rien
             return;
         }
 
-        // Vérifie si la redirection a déjà été effectuée
+        //Vérifie si la redirection a déjà été effectuée
         $session = $request->getSession();
         $redirected = $session->get('redirected_' . $route);
         if ($redirected) {
             return;
         }
 
-        // Si l'utilisateur est authentifié mais ne possède pas le rôle ROLE_ACTIVE
+        // if($route == "app_profile_new" || $route == "app_business_new"){
+        //     return;
+        // }
+       
+        // Si l'utilisateur est authentifié mais ne possède pas le rôle isActivated()
         if ($user) {
             if (in_array('ROLE_STUDENT', $user->getRoles())) {
                 $route = 'app_profile_new';

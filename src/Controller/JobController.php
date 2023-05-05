@@ -21,6 +21,17 @@ class JobController extends AbstractController
     public function index(JobRepository $jobRepository, Request $request): Response
     {
 
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+        if (!$user->isActivated()) {
+            if (in_array('ROLE_STUDENT', $user->getRoles())) {
+                return $this->redirectToRoute('app_profile_new');
+            } elseif (in_array('ROLE_BUSINESS', $user->getRoles())) {
+                return $this->redirectToRoute('app_business_new');
+                $route = 'app_business_new';
+            }
+        }
+
         $jobs = $jobRepository->search(
             $request->query->get('q')
         );
