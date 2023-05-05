@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->createUser($manager, 'student@gmail.com', ['ROLE_STUDENT']);
+        $this->createUser($manager, 'student@gmail.com', ['ROLE_STUDENT', 'ROLE_USER', ]);
         $this->createUser($manager, 'business@gmail.com', ['ROLE_BUSINESS']);
     }
 
