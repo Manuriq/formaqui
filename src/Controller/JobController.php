@@ -41,8 +41,8 @@ class JobController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_job_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, JobRepository $jobRepository, HttpClientInterface $httpClient): Response
+    #[Route('/new/{id?}', name: 'app_job_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Job $duplicateJob = null, JobRepository $jobRepository, HttpClientInterface $httpClient): Response
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
@@ -55,8 +55,14 @@ class JobController extends AbstractController
 
         }
 
-        $job = new Job();
-    
+        //$job = new Job();
+
+        if ($duplicateJob){
+            $job = clone $duplicateJob;
+        }else{
+            $job = new Job();
+        }
+        
         $form = $this->createForm(JobType::class, $job, array(
                 'address' => $user->getBusinesses()->first()->getAddress(),
                 'autocomplete' => $this->generateUrl('autocomplete')

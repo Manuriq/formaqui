@@ -59,7 +59,9 @@ class UserCrudController extends AbstractCrudController
                     'data' => ["Accès au site"],
                 ])
             ->setRequired(true)
-            ->onlyOnForms(),
+            ->onlyWhenCreating(),
+            ArrayField::new('roles', 'Roles')
+            ->onlyWhenUpdating(),
             BooleanField::new('is_verified', 'Utilisateur vérifié'),
             DateTimeField::new('created_at', 'Date de création')->hideOnForm(),
             DateTimeField::new('updated_at', 'Date de modification')->hideOnForm(),
