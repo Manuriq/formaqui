@@ -23,7 +23,7 @@
                     type="search"
                     name="q"
                     class="form-control"
-                    placeholder="Search..."
+                    placeholder="Rechercher..."
                     aria-label="Search"
                     class="form-control form-control-lg input-formaqui" placeholder="Recherche"
                 >
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="row justify-content-around col-11  col-md-8 mb-4 align-items-center mt-4 mx-auto">
-        <h3 class="page-h3 col-auto mb-4 text-left">{{ is_granted('ROLE_BUSINESS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
+        <h3 class="page-h3 col-12 mb-4 text-left">{{ is_granted('ROLE_BUSINESS') ? 'Vos offres d\'emplois' : 'Les dernières offres' }}</h3>
         {% if is_granted('ROLE_BUSINESS') %}
         <div class="col-11 mb-2">
             <a href="{{ path('app_job_new') }}" class="btn btn-primary">Ajouter une annonce</a>
@@ -53,24 +53,20 @@
                                         <img src="{{ asset('/images/avatars/' ~ job.business.imageName ~ '') }}" class="img-thumbnail" width="48px" height="48px">
                                     {% endif %}
                                 </div>
-                                <div class="col-auto">
-                                {% if job.PayChoice == 0 %}
-                                    <span class="fw-bold">
-                                        {{ job.pay }} € brut / an
-                                    </span>
-                                {% elseif job.PayChoice == 1 %}
-                                    <span class="fw-bold">
-                                        {{ job.pay }} € brut / mois
-                                    </span>
-                                {% elseif job.PayChoice == 2 %}
-                                    <span class="fw-bold">
-                                        {{ job.pay }} € brut / heure
-                                    </span>
-                                    {% endif %}
+                                <div class="col-auto fw-bold">
+                                    {{ job.business.name }} • {{ job.city }}, {{ job.postcode }}
                                 </div>
                             </div>
                             <h4 class="job-title mt-4 fw-bold">{{ job.title }}</h4>
-                            <span class="job-desc">{{ job.business.name }} • {{ job.city }}, {{ job.postcode }}</span>
+                            <span class="job-desc">
+                                {% if job.PayChoice == 0 %}
+                                    {{ job.pay }} € brut / an
+                                {% elseif job.PayChoice == 1 %}
+                                    {{ job.pay }} € brut / mois
+                                {% elseif job.PayChoice == 2 %}
+                                    {{ job.pay }} € brut / heure
+                                {% endif %}
+                            </span>
                             <div class="col-12 mt-2">
             
                                 <ul class="list-inline">
