@@ -49,6 +49,7 @@ jobs:
           CI: true
           SITE_URL: ${{ inputs.site-url }}
         run: |
+          yarn install --force
           npm install
           npm ci
           npm run build
