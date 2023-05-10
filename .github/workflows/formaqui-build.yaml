@@ -47,9 +47,9 @@ jobs:
       - name: Setup composer
         uses: php-actions/composer@v6
         with:
-          php_version: '8.1'
+          php_version: '8.2'
           version: '2'
-          args: --optimize-autoloader --no-dev
+          args: --optimize-autoloader
         
       - name: Build Node assets
         env:
