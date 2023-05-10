@@ -49,6 +49,7 @@ jobs:
           CI: true
           SITE_URL: ${{ inputs.site-url }}
         run: |
+          npm install
           npm ci
           npm run build
 
