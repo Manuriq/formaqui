@@ -49,7 +49,7 @@ jobs:
         with:
           php_version: '8.2'
           version: '2'
-          args: --optimize-autoloader
+          args: --optimize-autoloader --no-dev
         
       - name: Build Node assets
         env:
