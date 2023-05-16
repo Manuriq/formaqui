@@ -15,13 +15,12 @@ deploy:
       - find $(pwd) -type f -not -path "$(pwd)/logs/*" -exec chmod 664 {} \;
       - find $(pwd) -type d -not -name "logs" -exec chmod 775 {} \;
       - chmod -R o+w var
-      # - php bin/console doctrine:database:create --if-not-exists
+      - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+      - php bin/console doctrine:database:create
       - php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
-      - npm install
-      - composer install
-      - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+
   # configuration part, which is taken at ALL FURTHER deployments of this branch
   recurring:
     # folders that are not copied to IONOS webspace
