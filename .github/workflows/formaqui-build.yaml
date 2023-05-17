@@ -48,7 +48,7 @@ jobs:
         with:
           php_version: '8.2'
           version: '2'
-          args: --optimize-autoloader --no-dev
+          args: #--optimize-autoloader --no-dev
 
       - name: Setup Node
         uses: actions/setup-node@v3
