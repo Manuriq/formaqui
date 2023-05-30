@@ -95,11 +95,6 @@ class ProfileType extends AbstractType
                 'expanded' => true,
             ])
             ->add('replacements', ChoiceType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Acceptez vous les remplacements ponctuels ?'
-                    ]),
-                ],
                 'choices' => [
                     'Oui' => true,
                     'Non' => false,

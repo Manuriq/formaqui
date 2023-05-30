@@ -32,6 +32,11 @@ class JobController extends AbstractController
             }
         }
 
+        if (!$user->isVerified()) {
+            $this->addFlash("danger", "Votre compte n'a pas été activé par un administrateur. Veuillez contacter un administrateur du site.");
+            return $this->redirectToRoute('app_home');
+        }
+
         $jobs = $jobRepository->search(
             $request->query->get('q')
         );
