@@ -33,7 +33,7 @@ class JobController extends AbstractController
         }
 
         if (!$user->isVerified()) {
-            $this->addFlash("danger", "votre profil a bien été pris en compte un administrateur va le valider et vous pourrez postuler à des offres.");
+            $this->addFlash("danger", "Votre profil a bien été pris en compte un administrateur va le valider et vous pourrez postuler à des offres.");
             return $this->redirectToRoute('app_home');
         }
 
